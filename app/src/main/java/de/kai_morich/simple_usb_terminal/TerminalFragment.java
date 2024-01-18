@@ -29,6 +29,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +62,11 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private TextView receiveText;
     private TextView sendText;
     private ControlLines controlLines;
+
+    // si * start
+    private ExpandablePanel panel;
+    // si * finish
+
     private TextUtil.HexWatcher hexWatcher;
 
     private Connected connected = Connected.False;
@@ -186,6 +192,36 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         View sendBtn = view.findViewById(R.id.send_btn);
         sendBtn.setOnClickListener(v -> send(sendText.getText().toString()));
         controlLines = new ControlLines(view);
+
+        // si ** start
+        TextView text;
+        text = view.findViewById(R.id.value_text);
+
+        text.setText("The quick brown fox jumps over the lazy dog... " +
+                "The quick brown fox jumps over the lazy dog... " +
+                "The quick brown fox jumps over the lazy dog... " +
+                "The quick brown fox jumps over the lazy dog... " +
+                "The quick brown fox jumps over the lazy dog... " +
+                "The quick brown fox jumps over the lazy dog... " +
+                "The quick brown fox jumps over the lazy dog... ");
+
+        panel = view.findViewById(R.id.expandablePanel);
+
+        panel.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
+            public void onCollapse(View handle, View content) {
+                Button btn = (Button)handle;
+                btn.setText("More");
+
+                panel.setCollapsedHeight(200);
+            }
+            public void onExpand(View handle, View content) {
+                Button btn = (Button)handle;
+                panel.setCollapsedHeight(50);
+                btn.setText("Less");
+            }
+        });
+        // si ** finish
+
         return view;
     }
 

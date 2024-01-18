@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Simple USB Terminal</string>
     <string name="devices">USB Devices</string>
+
+    <string name="rbutt_auto">Auto</string>
+    <string name="rbutt_f95">f95</string>
+    <string name="rbutt_f1k">f1k</string>
+    <string name="rbutt_f10k">f10k</string>
+    <string name="rbutt_f95k">f95k</string>
+    <string name="rbutt_f160k">160k</string>
+
 </resources>
