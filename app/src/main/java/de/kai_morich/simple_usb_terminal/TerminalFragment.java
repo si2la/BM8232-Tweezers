@@ -194,16 +194,16 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         controlLines = new ControlLines(view);
 
         // si ** start
-        TextView text;
-        text = view.findViewById(R.id.value_text);
-
-        text.setText("The quick brown fox jumps over the lazy dog... " +
-                "The quick brown fox jumps over the lazy dog... " +
-                "The quick brown fox jumps over the lazy dog... " +
-                "The quick brown fox jumps over the lazy dog... " +
-                "The quick brown fox jumps over the lazy dog... " +
-                "The quick brown fox jumps over the lazy dog... " +
-                "The quick brown fox jumps over the lazy dog... ");
+//        TextView text;
+//        text = view.findViewById(R.id.value_text);
+//
+//        text.setText("The quick brown fox jumps over the lazy dog... " +
+//                "The quick brown fox jumps over the lazy dog... " +
+//                "The quick brown fox jumps over the lazy dog... " +
+//                "The quick brown fox jumps over the lazy dog... " +
+//                "The quick brown fox jumps over the lazy dog... " +
+//                "The quick brown fox jumps over the lazy dog... " +
+//                "The quick brown fox jumps over the lazy dog... ");
 
         panel = view.findViewById(R.id.expandablePanel);
 
