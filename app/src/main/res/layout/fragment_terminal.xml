@@ -269,7 +269,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_weight="70"
-                android:text="More" />
+                android:text="Ufd" />
         </LinearLayout>
     </de.kai_morich.simple_usb_terminal.ExpandablePanel>
 

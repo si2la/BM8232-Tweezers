@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Simple USB Terminal</string>
+    <string name="app_name">BM8232 Terminal</string>
     <string name="devices">USB Devices</string>
 
     <string name="rbutt_auto">Auto</string>

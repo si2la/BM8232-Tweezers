@@ -210,14 +210,15 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         panel.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
             public void onCollapse(View handle, View content) {
                 Button btn = (Button)handle;
-                btn.setText("More");
+                btn.setText("Ufd");
 
                 panel.setCollapsedHeight(200);
             }
             public void onExpand(View handle, View content) {
                 Button btn = (Button)handle;
                 panel.setCollapsedHeight(50);
-                btn.setText("Less");
+                btn.setText("<<");
+                send("ufd\r");
             }
         });
         // si ** finish
@@ -387,7 +388,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 data = TextUtil.fromHexString(msg);
             } else {
                 msg = str;
-                data = (str + newline).getBytes();
+                //data = (str + newline).getBytes();
+                data = str.getBytes();
             }
             SpannableStringBuilder spn = new SpannableStringBuilder(msg + '\n');
             spn.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorSendText)), 0, spn.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
