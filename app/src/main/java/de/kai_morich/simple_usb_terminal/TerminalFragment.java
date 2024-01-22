@@ -65,6 +65,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
     // si * start
     private ExpandablePanel panel;
+    private TextView t_ufd_upp, t_ufd_ave, t_ufd_rms, t_ufd_f, t_ufd_t, t_ufd_d, t_ufd_n;
     // si * finish
 
     private TextUtil.HexWatcher hexWatcher;
@@ -182,6 +183,13 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         receiveText = view.findViewById(R.id.receive_text);                          // TextView performance decreases with number of spans
         receiveText.setTextColor(getResources().getColor(R.color.colorRecieveText)); // set as default color to reduce number of spans
         receiveText.setMovementMethod(ScrollingMovementMethod.getInstance());
+        t_ufd_f = view.findViewById(R.id.TextUfdF);
+        t_ufd_t = view.findViewById(R.id.TextUfdT);
+        t_ufd_d = view.findViewById(R.id.TextUfdD);
+        t_ufd_n = view.findViewById(R.id.TextUfdN);
+        t_ufd_ave = view.findViewById(R.id.TextUfdUave);
+        t_ufd_rms = view.findViewById(R.id.TextUfdUrms);
+        t_ufd_upp = view.findViewById(R.id.TextUfdUpp);
 
         sendText = view.findViewById(R.id.send_text);
         hexWatcher = new TextUtil.HexWatcher(sendText);
@@ -425,6 +433,37 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     pendingNewline = msg.charAt(msg.length() - 1) == '\r';
                 }
                 spn.append(TextUtil.toCaretString(msg, newline.length() != 0));
+
+                // Ufd message handler
+                int l_ind = -1;
+                int f_ind = msg.indexOf("f=");
+                if ( f_ind >= 0) l_ind = msg.substring(f_ind).indexOf("Hz");
+                if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_f.setText(msg.substring(f_ind, f_ind + l_ind + 2));
+
+                f_ind = msg.indexOf("T=");
+                if ( f_ind >= 0) l_ind = msg.substring(f_ind).indexOf("s"); else l_ind = -1;
+                if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_t.setText(msg.substring(f_ind, f_ind + l_ind + 1));
+
+                f_ind = msg.indexOf("D=");
+                if ( f_ind >= 0 ) t_ufd_d.setText(msg.substring(f_ind, f_ind + 6));
+
+                f_ind = msg.indexOf("N=");
+                if ( f_ind >= 0 ) t_ufd_n.setText(msg.substring(f_ind, f_ind + 9));
+
+                //f_ind = msg.indexOf("Uave"); // can't find Uave!!!???
+                //if ( f_ind >= 0) l_ind = msg.substring(f_ind).indexOf("V"); else l_ind = -1;
+                //if ( l_ind > f_ind ) t_ufd_ave.setText(msg.substring(f_ind + 11, f_ind + 11 + l_ind + 1));
+                f_ind = msg.indexOf("V");
+                if ( f_ind >= 0) t_ufd_ave.setText(msg.substring(0, f_ind));
+
+                f_ind = msg.indexOf("Urms");
+                if ( f_ind >= 0) l_ind = msg.substring(f_ind).indexOf("V"); else l_ind = -1;
+                if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_rms.setText(msg.substring(f_ind, f_ind + l_ind + 1));
+
+                f_ind = msg.indexOf("Up-p");
+                if ( f_ind >= 0) l_ind = msg.substring(f_ind).indexOf("V"); else l_ind = -1;
+                if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_upp.setText(msg.substring(f_ind, f_ind + l_ind + 1));
+
             }
         }
         receiveText.append(spn);
