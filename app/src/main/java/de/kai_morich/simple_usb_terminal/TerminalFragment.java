@@ -434,39 +434,45 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 }
                 spn.append(TextUtil.toCaretString(msg, newline.length() != 0));
 
-                // Ufd message handler
-                int l_ind = -1;
-                int f_ind = msg.indexOf("f=");
-                if ( f_ind >= 0) l_ind = msg.substring(f_ind).indexOf("Hz");
-                if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_f.setText(msg.substring(f_ind, f_ind + l_ind + 2));
-
-                f_ind = msg.indexOf("T=");
-                if ( f_ind >= 0) l_ind = msg.substring(f_ind).indexOf("s"); else l_ind = -1;
-                if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_t.setText(msg.substring(f_ind, f_ind + l_ind + 1));
-
-                f_ind = msg.indexOf("D=");
-                if ( f_ind >= 0 ) t_ufd_d.setText(msg.substring(f_ind, f_ind + 6));
-
-                f_ind = msg.indexOf("N=");
-                if ( f_ind >= 0 ) t_ufd_n.setText(msg.substring(f_ind, f_ind + 9));
-
-                //f_ind = msg.indexOf("Uave"); // can't find Uave!!!???
-                //if ( f_ind >= 0) l_ind = msg.substring(f_ind).indexOf("V"); else l_ind = -1;
-                //if ( l_ind > f_ind ) t_ufd_ave.setText(msg.substring(f_ind + 11, f_ind + 11 + l_ind + 1));
-                f_ind = msg.indexOf("V");
-                if ( f_ind >= 0) t_ufd_ave.setText(msg.substring(0, f_ind));
-
-                f_ind = msg.indexOf("Urms");
-                if ( f_ind >= 0) l_ind = msg.substring(f_ind).indexOf("V"); else l_ind = -1;
-                if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_rms.setText(msg.substring(f_ind, f_ind + l_ind + 1));
-
-                f_ind = msg.indexOf("Up-p");
-                if ( f_ind >= 0) l_ind = msg.substring(f_ind).indexOf("V"); else l_ind = -1;
-                if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_upp.setText(msg.substring(f_ind, f_ind + l_ind + 1));
-
             }
         }
         receiveText.append(spn);
+
+        // si * start
+        //intermediate string for parsing
+        String msgi = spn.toString();
+
+        // Ufd message handler
+        int l_ind = -1, m_ind = -1;
+        int f_ind = msgi.indexOf("f=");
+        if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("Hz");
+        if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_f.setText(msgi.substring(f_ind, f_ind + l_ind + 2));
+
+        f_ind = msgi.indexOf("T=");
+        if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("s"); else l_ind = -1;
+        if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_t.setText(msgi.substring(f_ind, f_ind + l_ind + 1));
+
+        f_ind = msgi.indexOf("D=");
+        if ( f_ind >= 0 ) t_ufd_d.setText(msgi.substring(f_ind, f_ind + 6));
+
+        f_ind = msgi.indexOf("N=");
+        if ( f_ind >= 0 ) t_ufd_n.setText(msgi.substring(f_ind, f_ind + 9));
+
+        f_ind = msgi.indexOf("Uave"); // TODO can't find Uave=and_data, maybe find buffer size !!!???
+        if ( f_ind >= 0) t_ufd_ave.setText(msgi.substring(f_ind, f_ind + 11));
+        f_ind = msgi.indexOf("V");
+        if ( f_ind >= 0 && f_ind < 10) t_ufd_ave.append(msgi.substring(0, f_ind));
+
+        f_ind = msgi.indexOf("Urms");
+        if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("V"); else l_ind = -1;
+        if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_rms.setText(msgi.substring(f_ind, f_ind + l_ind + 1));
+
+        f_ind = msgi.indexOf("Up-p");
+        if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("V"); else l_ind = -1;
+        if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_upp.setText(msgi.substring(f_ind, f_ind + l_ind + 1));
+
+        // si * finish
+
     }
 
     void status(String str) {
