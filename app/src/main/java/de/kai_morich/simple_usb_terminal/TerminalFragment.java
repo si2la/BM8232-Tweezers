@@ -53,7 +53,8 @@ import java.util.EnumSet;
 public class TerminalFragment extends Fragment implements ServiceConnection, SerialListener {
 
     private enum Connected { False, Pending, True }
-
+    private enum BM8232_MODE { NONE, RLC_METER, U_F_DIODE, GENERATOR}
+    private  BM8232_MODE bm8232_mode;
     private final BroadcastReceiver broadcastReceiver;
     private int deviceId, portNum, baudRate;
     private UsbSerialPort usbSerialPort;
@@ -100,6 +101,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         deviceId = getArguments().getInt("device");
         portNum = getArguments().getInt("port");
         baudRate = getArguments().getInt("baud");
+        bm8232_mode = BM8232_MODE.NONE;
     }
 
     @Override
@@ -226,7 +228,10 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 Button btn = (Button)handle;
                 panel.setCollapsedHeight(50);
                 btn.setText("<<");
-                send("ufd\r");
+                if (bm8232_mode != BM8232_MODE.U_F_DIODE) {
+                    bm8232_mode = BM8232_MODE.U_F_DIODE;
+                    send("ufd\r");
+                }
             }
         });
         // si ** finish
