@@ -65,7 +65,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private ControlLines controlLines;
 
     // si * start
-    private ExpandablePanel panel;
+    private ExpandablePanel panel_Ufd;
     private TextView t_ufd_upp, t_ufd_ave, t_ufd_rms, t_ufd_f, t_ufd_t, t_ufd_d, t_ufd_n;
     // si * finish
 
@@ -215,18 +215,18 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 //                "The quick brown fox jumps over the lazy dog... " +
 //                "The quick brown fox jumps over the lazy dog... ");
 
-        panel = view.findViewById(R.id.expandablePanel);
+        panel_Ufd = view.findViewById(R.id.expandablePanelUfd);
 
-        panel.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
+        panel_Ufd.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
             public void onCollapse(View handle, View content) {
                 Button btn = (Button)handle;
                 btn.setText("Ufd");
 
-                panel.setCollapsedHeight(200);
+                panel_Ufd.setCollapsedHeight(200);
             }
             public void onExpand(View handle, View content) {
                 Button btn = (Button)handle;
-                panel.setCollapsedHeight(50);
+                panel_Ufd.setCollapsedHeight(50);
                 btn.setText("<<");
                 if (bm8232_mode != BM8232_MODE.U_F_DIODE) {
                     bm8232_mode = BM8232_MODE.U_F_DIODE;
