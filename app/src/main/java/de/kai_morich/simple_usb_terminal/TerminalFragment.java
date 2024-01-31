@@ -65,8 +65,9 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private ControlLines controlLines;
 
     // si * start
-    private ExpandablePanel panel_Ufd;
+    private ExpandablePanel panel_Ufd, panel_Gen;
     private TextView t_ufd_upp, t_ufd_ave, t_ufd_rms, t_ufd_f, t_ufd_t, t_ufd_d, t_ufd_n;
+    private TextView t_gen_wave, t_gen_dummy, t_gen_freq, t_gen_plus, t_gen_minus;
     // si * finish
 
     private TextUtil.HexWatcher hexWatcher;
@@ -185,6 +186,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         receiveText = view.findViewById(R.id.receive_text);                          // TextView performance decreases with number of spans
         receiveText.setTextColor(getResources().getColor(R.color.colorRecieveText)); // set as default color to reduce number of spans
         receiveText.setMovementMethod(ScrollingMovementMethod.getInstance());
+
+        // * si
         t_ufd_f = view.findViewById(R.id.TextUfdF);
         t_ufd_t = view.findViewById(R.id.TextUfdT);
         t_ufd_d = view.findViewById(R.id.TextUfdD);
@@ -192,6 +195,13 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         t_ufd_ave = view.findViewById(R.id.TextUfdUave);
         t_ufd_rms = view.findViewById(R.id.TextUfdUrms);
         t_ufd_upp = view.findViewById(R.id.TextUfdUpp);
+
+        t_gen_wave = view.findViewById(R.id.TextGenWave);
+        t_gen_dummy = view.findViewById(R.id.TextGenDummy);
+        t_gen_freq = view.findViewById(R.id.TextGenFrequency);
+        t_gen_plus = view.findViewById(R.id.TextGenPlus);
+        t_gen_minus = view.findViewById(R.id.TextGenMinus);
+        // * si
 
         sendText = view.findViewById(R.id.send_text);
         hexWatcher = new TextUtil.HexWatcher(sendText);
@@ -204,17 +214,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         controlLines = new ControlLines(view);
 
         // si ** start
-//        TextView text;
-//        text = view.findViewById(R.id.value_text);
-//
-//        text.setText("The quick brown fox jumps over the lazy dog... " +
-//                "The quick brown fox jumps over the lazy dog... " +
-//                "The quick brown fox jumps over the lazy dog... " +
-//                "The quick brown fox jumps over the lazy dog... " +
-//                "The quick brown fox jumps over the lazy dog... " +
-//                "The quick brown fox jumps over the lazy dog... " +
-//                "The quick brown fox jumps over the lazy dog... ");
-
         panel_Ufd = view.findViewById(R.id.expandablePanelUfd);
 
         panel_Ufd.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
@@ -226,11 +225,31 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             }
             public void onExpand(View handle, View content) {
                 Button btn = (Button)handle;
-                panel_Ufd.setCollapsedHeight(50);
+                panel_Ufd.setCollapsedHeight(60);
                 btn.setText("<<");
                 if (bm8232_mode != BM8232_MODE.U_F_DIODE) {
                     bm8232_mode = BM8232_MODE.U_F_DIODE;
                     send("ufd\r");
+                }
+            }
+        });
+
+        panel_Gen = view.findViewById(R.id.expandablePanelGen);
+
+        panel_Gen.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
+            public void onCollapse(View handle, View content) {
+                Button btn_gen = (Button)handle;
+                btn_gen.setText("Gen");
+
+                panel_Gen.setCollapsedHeight(180);
+            }
+            public void onExpand(View handle, View content) {
+                Button btn_gen = (Button)handle;
+                panel_Gen.setCollapsedHeight(60);
+                btn_gen.setText("<<");
+                if (bm8232_mode != BM8232_MODE.GENERATOR) {
+                    bm8232_mode = BM8232_MODE.GENERATOR;
+                    send("gen\r");
                 }
             }
         });
@@ -447,9 +466,9 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         //intermediate string for parsing
         String msgi = spn.toString();
 
+        int l_ind = -1, f_ind = -1;
         // Ufd message handler
-        int l_ind = -1, m_ind = -1;
-        int f_ind = msgi.indexOf("f=");
+        f_ind = msgi.indexOf("f=");
         if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("Hz");
         if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_f.setText(msgi.substring(f_ind, f_ind + l_ind + 2));
 
@@ -464,7 +483,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         if ( f_ind >= 0 ) t_ufd_n.setText(msgi.substring(f_ind, f_ind + 9));
 
         f_ind = msgi.indexOf("Uave"); // TODO can't find Uave=and_data, maybe find buffer size !!!???
-        if ( f_ind >= 0) t_ufd_ave.setText(msgi.substring(f_ind, f_ind + 11));
+        if ( f_ind >= 0 && f_ind + 11 < msgi.length() ) t_ufd_ave.setText(msgi.substring(f_ind, f_ind + 11));
         f_ind = msgi.indexOf("V");
         if ( f_ind >= 0 && f_ind < 10) t_ufd_ave.append(msgi.substring(0, f_ind));
 
@@ -475,6 +494,10 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         f_ind = msgi.indexOf("Up-p");
         if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("V"); else l_ind = -1;
         if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_upp.setText(msgi.substring(f_ind, f_ind + l_ind + 1));
+
+        f_ind = msgi.indexOf("Frequency=");
+        if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("Hz");
+        if ( f_ind >= 0 && l_ind >= 0 ) t_gen_freq.setText(msgi.substring(f_ind, f_ind + l_ind + 2));
 
         // si * finish
 
