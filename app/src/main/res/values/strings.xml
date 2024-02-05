@@ -9,4 +9,6 @@
     <string name="rbutt_f95k">f95k</string>
     <string name="rbutt_f160k">160k</string>
 
+    <string name="rlc_table_string_none">--</string>
+
 </resources>
