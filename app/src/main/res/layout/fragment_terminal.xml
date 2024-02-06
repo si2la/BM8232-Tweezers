@@ -86,7 +86,12 @@
         android:layout_height="2dp" />
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+      <LinearLayout
+        android:layout_width="match_parent"
+          android:orientation="vertical"
+        android:layout_height="wrap_content">
+
 
         <de.kai_morich.simple_usb_terminal.ExpandablePanel
             android:id="@+id/expandablePanelGen"
@@ -501,7 +506,7 @@
                     android:text="RLC" />
             </LinearLayout>
         </de.kai_morich.simple_usb_terminal.ExpandablePanel>
-
+      </LinearLayout>
     </ScrollView>
 
     <TextView
