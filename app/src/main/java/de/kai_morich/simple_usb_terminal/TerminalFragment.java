@@ -49,6 +49,7 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.StringTokenizer;
 
 public class TerminalFragment extends Fragment implements ServiceConnection, SerialListener {
 
@@ -65,9 +66,10 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private ControlLines controlLines;
 
     // si * start
-    private ExpandablePanel panel_Ufd, panel_Gen;
+    private ExpandablePanel panel_RLC, panel_Ufd, panel_Gen;
     private TextView t_ufd_upp, t_ufd_ave, t_ufd_rms, t_ufd_f, t_ufd_t, t_ufd_d, t_ufd_n;
     private TextView t_gen_wave, t_gen_dummy, t_gen_freq, t_gen_plus, t_gen_minus;
+    private TextView t_cl, t_z, t_r, t_eqs, t_qtg;
     // si * finish
 
     private TextUtil.HexWatcher hexWatcher;
@@ -202,6 +204,12 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         t_gen_freq = view.findViewById(R.id.TextGenFrequency);
         t_gen_plus = view.findViewById(R.id.TextGenPlus);
         t_gen_minus = view.findViewById(R.id.TextGenMinus);
+
+        t_cl = view.findViewById(R.id.TextCL);
+        t_z = view.findViewById(R.id.TextZ);
+        t_r = view.findViewById(R.id.TextR);
+        t_eqs = view.findViewById(R.id.TextEqS);
+        t_qtg = view.findViewById(R.id.TextQtg);
         // * si
 
         sendText = view.findViewById(R.id.send_text);
@@ -215,6 +223,26 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         controlLines = new ControlLines(view);
 
         // si ** start
+        panel_RLC = view.findViewById(R.id.expandablePanelRLC);
+
+        panel_RLC.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
+            public void onCollapse(View handle, View content) {
+                Button btn_rlc = (Button)handle;
+                btn_rlc.setText("RLC");
+
+                panel_RLC.setCollapsedHeight(180);
+            }
+            public void onExpand(View handle, View content) {
+                Button btn_rlc = (Button)handle;
+                panel_RLC.setCollapsedHeight(60);
+                btn_rlc.setText("<<");
+                if (bm8232_mode != BM8232_MODE.RLC_METER) {
+                    bm8232_mode = BM8232_MODE.RLC_METER;
+                    send("rlc\r");
+                }
+            }
+        });
+
         panel_Ufd = view.findViewById(R.id.expandablePanelUfd);
 
         panel_Ufd.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
@@ -466,41 +494,62 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         // si * start
         //intermediate string for parsing
         String msgi = spn.toString();
-
         int l_ind = -1, f_ind = -1;
-        // Ufd message handler
-        f_ind = msgi.indexOf("f=");
-        if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("Hz");
-        if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_f.setText(msgi.substring(f_ind, f_ind + l_ind + 2));
 
-        f_ind = msgi.indexOf("T=");
-        if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("s"); else l_ind = -1;
-        if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_t.setText(msgi.substring(f_ind, f_ind + l_ind + 1));
+        if ( bm8232_mode == BM8232_MODE.U_F_DIODE ) {
+            // Ufd message handler
+            f_ind = msgi.indexOf("f=");
+            if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("Hz");
+            if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_f.setText(msgi.substring(f_ind, f_ind + l_ind + 2));
 
-        f_ind = msgi.indexOf("D=");
-        if ( f_ind >= 0 ) t_ufd_d.setText(msgi.substring(f_ind, f_ind + 6));
+            f_ind = msgi.indexOf("T=");
+            if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("s"); else l_ind = -1;
+            if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_t.setText(msgi.substring(f_ind, f_ind + l_ind + 1));
 
-        f_ind = msgi.indexOf("N=");
-        if ( f_ind >= 0 ) t_ufd_n.setText(msgi.substring(f_ind, f_ind + 9));
+            f_ind = msgi.indexOf("D=");
+            if ( f_ind >= 0 ) t_ufd_d.setText(msgi.substring(f_ind, f_ind + 6));
 
-        f_ind = msgi.indexOf("Uave"); // TODO can't find Uave=and_data, maybe find buffer size !!!???
-        if ( f_ind >= 0 && f_ind + 11 < msgi.length() ) t_ufd_ave.setText(msgi.substring(f_ind, f_ind + 11));
-        f_ind = msgi.indexOf("V");
-        if ( f_ind >= 0 && f_ind < 10) t_ufd_ave.append(msgi.substring(0, f_ind));
+            f_ind = msgi.indexOf("N=");
+            if ( f_ind >= 0 ) t_ufd_n.setText(msgi.substring(f_ind, f_ind + 9));
 
-        f_ind = msgi.indexOf("Urms");
-        if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("V"); else l_ind = -1;
-        if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_rms.setText(msgi.substring(f_ind, f_ind + l_ind + 1));
+            f_ind = msgi.indexOf("Uave"); // TODO can't find Uave=and_data, maybe try to find buffer size !!!???
+            if ( f_ind >= 0 && f_ind + 11 < msgi.length() ) t_ufd_ave.setText(msgi.substring(f_ind, f_ind + 11) + "V");
+//        f_ind = msgi.indexOf("V");
+//        if ( f_ind >= 0 && f_ind < 10) t_ufd_ave.append(msgi.substring(0, f_ind));
 
-        f_ind = msgi.indexOf("Up-p");
-        if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("V"); else l_ind = -1;
-        if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_upp.setText(msgi.substring(f_ind, f_ind + l_ind + 1));
+            f_ind = msgi.indexOf("Urms");
+            if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("V"); else l_ind = -1;
+            if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_rms.setText(msgi.substring(f_ind, f_ind + l_ind + 1));
 
-        f_ind = msgi.indexOf("Frequency=");
-        if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("Hz");
-        if ( f_ind >= 0 && l_ind >= 0 ) t_gen_freq.setText(msgi.substring(f_ind, f_ind + l_ind + 2));
+            f_ind = msgi.indexOf("Up-p");
+            if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("V"); else l_ind = -1;
+            if ( f_ind >= 0 && l_ind >= 0 ) t_ufd_upp.setText(msgi.substring(f_ind, f_ind + l_ind + 1));
 
-        // si * finish
+        }
+
+        if ( bm8232_mode == BM8232_MODE.GENERATOR ) {
+            // Gen message handler
+            f_ind = msgi.indexOf("Frequency=");
+            if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("Hz");
+            if ( f_ind >= 0 && l_ind >= 0 ) t_gen_freq.setText(msgi.substring(f_ind, f_ind + l_ind + 2));
+        }
+
+        if ( bm8232_mode == BM8232_MODE.RLC_METER ) {
+            // RLC message handler
+            StringTokenizer st;
+            st = new StringTokenizer(msgi, ",");
+            String freq_str = "";
+            if ( st.hasMoreTokens() ) {
+                freq_str = (st.nextToken()).trim();
+            }
+
+            if ( st.hasMoreTokens() ) t_cl.setText( (st.nextToken()).trim().replace("L=", "").replace("C=", "") );
+            if ( st.hasMoreTokens() ) t_r.setText( replaceOhm ((st.nextToken()).trim().replace("R=", "")) );
+            if ( st.hasMoreTokens() ) t_eqs.setText( (st.nextToken()).trim() ); // Eq S
+            if ( st.hasMoreTokens() ) t_z.setText( replaceOhm ((st.nextToken()).trim().replace("Z=", "")) );
+            if ( st.hasMoreTokens() ) t_qtg.setText( (st.nextToken()).trim().replace("Q=", "").replace("tg=", "") );
+
+        }
 
     }
 
@@ -647,6 +696,13 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             cdBtn.setChecked(false);
             riBtn.setChecked(false);
         }
+    }
+    @NonNull
+    static String replaceOhm(String str) {
+        String tmp;
+        // delete last odd symbol and add "Ω"
+        tmp = str.substring(0, str.length() - 1) + "Ω";
+        return tmp;
     }
 
 }

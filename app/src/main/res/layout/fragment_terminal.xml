@@ -416,12 +416,62 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <CheckBox
-                            android:id="@+id/checkBox95Hz"
-                            android:text="95Hz"
-                            android:textStyle="bold"
-                            android:typeface="monospace">
-                        </CheckBox>
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TableRow>
+                                <CheckBox
+                                    android:id="@+id/checkBoxAuto"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Auto"
+                                    android:typeface="monospace">
+                                </CheckBox>
+                                <CheckBox
+                                    android:id="@+id/checkBox95Hz"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="95Hz"
+                                    android:typeface="monospace">
+                                </CheckBox>
+                            </TableRow>
+
+                            <TableRow>
+                                <CheckBox
+                                    android:id="@+id/checkBox1kHz"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="1kHz"
+                                    android:typeface="monospace">
+                                </CheckBox>
+                                <CheckBox
+                                    android:id="@+id/checkBox10kHz"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="10kHz"
+                                    android:typeface="monospace">
+                                </CheckBox>
+                            </TableRow>
+
+                            <TableRow>
+                                <CheckBox
+                                    android:id="@+id/checkBox95kHz"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="95kHz"
+                                    android:typeface="monospace">
+                                </CheckBox>
+                                <CheckBox
+                                    android:id="@+id/checkBox160kHz"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="160kHz"
+                                    android:typeface="monospace">
+                                </CheckBox>
+                            </TableRow>
+
+                        </TableLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -429,7 +479,7 @@
                             android:orientation="vertical" >
 
                             <TextView
-                                android:id="@+id/TextCL95Hz"
+                                android:id="@+id/TextCL"
                                 android:text="@string/rlc_table_string_none"
                                 android:layout_width="match_parent"
                                 android:layout_height="20dp"
@@ -438,7 +488,7 @@
                             </TextView>
 
                             <TextView
-                                android:id="@+id/TextR95Hz"
+                                android:id="@+id/TextR"
                                 android:text="@string/rlc_table_string_none"
                                 android:layout_width="match_parent"
                                 android:layout_height="20dp"
@@ -447,7 +497,7 @@
                             </TextView>
 
                             <TextView
-                                android:id="@+id/TextZ95Hz"
+                                android:id="@+id/TextZ"
                                 android:text="@string/rlc_table_string_none"
                                 android:layout_width="match_parent"
                                 android:layout_height="20dp"
@@ -456,7 +506,7 @@
                             </TextView>
 
                             <TextView
-                                android:id="@+id/TextQtg95Hz"
+                                android:id="@+id/TextQtg"
                                 android:text="@string/rlc_table_string_none"
                                 android:layout_width="match_parent"
                                 android:layout_height="20dp"
@@ -465,7 +515,7 @@
                             </TextView>
 
                             <TextView
-                                android:id="@+id/TextEqS95Hz"
+                                android:id="@+id/TextEqS"
                                 android:text="@string/rlc_table_string_none"
                                 android:layout_width="match_parent"
                                 android:layout_height="20dp"
