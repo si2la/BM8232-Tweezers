@@ -493,7 +493,11 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         // si * start
         //intermediate string for parsing
-        String msgi = spn.toString();
+        //String msgi = spn.toString();
+        String msgi;
+        if (receiveText.length() > 90)
+        msgi = receiveText.getText().subSequence(receiveText.length() - 90, receiveText.length()).toString();
+        else msgi  = spn.toString();
         int l_ind = -1, f_ind = -1;
 
         if ( bm8232_mode == BM8232_MODE.U_F_DIODE ) {
@@ -536,18 +540,39 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         if ( bm8232_mode == BM8232_MODE.RLC_METER ) {
             // RLC message handler
-            StringTokenizer st;
-            st = new StringTokenizer(msgi, ",");
-            String freq_str = "";
-            if ( st.hasMoreTokens() ) {
-                freq_str = (st.nextToken()).trim();
-            }
+            f_ind = msgi.indexOf("C=");
+            if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf(","); else l_ind = -1;
+            if ( f_ind >= 0 && l_ind >= 0 ) t_cl.setText(msgi.substring(f_ind, f_ind + l_ind));
 
-            if ( st.hasMoreTokens() ) t_cl.setText( (st.nextToken()).trim().replace("L=", "").replace("C=", "") );
-            if ( st.hasMoreTokens() ) t_r.setText( replaceOhm ((st.nextToken()).trim().replace("R=", "")) );
-            if ( st.hasMoreTokens() ) t_eqs.setText( (st.nextToken()).trim() ); // Eq S
-            if ( st.hasMoreTokens() ) t_z.setText( replaceOhm ((st.nextToken()).trim().replace("Z=", "")) );
-            if ( st.hasMoreTokens() ) t_qtg.setText( (st.nextToken()).trim().replace("Q=", "").replace("tg=", "") );
+            f_ind = msgi.indexOf("L=");
+            if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf(","); else l_ind = -1;
+            if ( f_ind >= 0 && l_ind >= 0 ) t_cl.setText(msgi.substring(f_ind, f_ind + l_ind));
+
+            f_ind = msgi.indexOf("R=");
+            if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf(","); else l_ind = -1;
+            if ( f_ind >= 0 && l_ind >= 0 ) t_r.setText(msgi.substring(f_ind, f_ind + l_ind));
+            //if ( l_ind >= 0 ) f_ind += l_ind;
+            //if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf(","); //else l_ind = -1;
+            //if ( f_ind >= 0 && l_ind >= 0 ) t_r.setText(msgi.substring(f_ind+2, f_ind + 9) );
+
+            f_ind = msgi.indexOf("Z=");
+            if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf(","); else l_ind = -1;
+            if ( f_ind >= 0 && l_ind >= 0 ) t_z.setText(replaceOhm (msgi.substring(f_ind, f_ind + l_ind)) );
+
+
+
+//            StringTokenizer st;
+//            st = new StringTokenizer(msgi, ",");
+//            String freq_str = "";
+//            if ( st.hasMoreTokens() ) {
+//                freq_str = (st.nextToken()).trim();
+//            }
+//
+//            if ( st.hasMoreTokens() ) t_cl.setText( (st.nextToken()).trim().replace("L=", "").replace("C=", "") );
+//            if ( st.hasMoreTokens() ) t_r.setText( replaceOhm ((st.nextToken()).trim().replace("R=", "")) );
+//            if ( st.hasMoreTokens() ) t_eqs.setText( (st.nextToken()).trim() ); // Eq S
+//            if ( st.hasMoreTokens() ) t_z.setText( replaceOhm ((st.nextToken()).trim().replace("Z=", "")) );
+//            if ( st.hasMoreTokens() ) t_qtg.setText( (st.nextToken()).trim().replace("Q=", "").replace("tg=", "") );
 
         }
 
