@@ -561,11 +561,17 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
             f_ind = msgi.indexOf("Q=");
             if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf(","); else l_ind = -1;
-            if ( f_ind >= 0 && l_ind >= 0 ) t_eqs.setText(msgi.substring(f_ind, f_ind + l_ind));
+            if ( f_ind >= 0 && l_ind >= 0 ) t_qtg.setText(msgi.substring(f_ind, f_ind + l_ind));
 
             f_ind = msgi.indexOf("tg=");
             if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf(","); else l_ind = -1;
             if ( f_ind >= 0 && l_ind >= 0 ) t_qtg.setText(msgi.substring(f_ind, f_ind + l_ind));
+
+            f_ind = msgi.indexOf("Ser");
+            if ( f_ind >= 0 ) t_eqs.setText("Ser");
+
+            f_ind = msgi.indexOf("Par");
+            if ( f_ind >= 0 ) t_eqs.setText("Par");
 
 //            StringTokenizer st;
 //            st = new StringTokenizer(msgi, ",");
