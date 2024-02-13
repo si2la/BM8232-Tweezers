@@ -306,8 +306,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_160k.setChecked(false);
                 }
                 else {
-                    cb_rlc_95.setChecked(true);
-                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("f95\r");
                 }
             }
         });
@@ -324,8 +322,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_160k.setChecked(false);
                 }
                 else {
-                    cb_rlc_auto.setChecked(true);
-                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
                 }
             }
         });
@@ -342,8 +338,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_160k.setChecked(false);
                 }
                 else {
-                    cb_rlc_auto.setChecked(true);
-                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
                 }
             }
         });
@@ -360,8 +354,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_160k.setChecked(false);
                 }
                 else {
-                    cb_rlc_auto.setChecked(true);
-                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
                 }
             }
         });
@@ -378,8 +370,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_160k.setChecked(false);
                 }
                 else {
-                    cb_rlc_auto.setChecked(true);
-                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
                 }
             }
         });
@@ -396,8 +386,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_160k.setChecked(false);
                 }
                 else {
-                    cb_rlc_auto.setChecked(true);
-                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
                 }
             }
         });
@@ -414,8 +402,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_95k.setChecked(false);
                 }
                 else {
-                    cb_rlc_auto.setChecked(true);
-                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
                 }
             }
         });
@@ -710,19 +696,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
             f_ind = msgi.indexOf("Par");
             if ( f_ind >= 0 ) t_eqs.setText("Par");
-
-//            StringTokenizer st;
-//            st = new StringTokenizer(msgi, ",");
-//            String freq_str = "";
-//            if ( st.hasMoreTokens() ) {
-//                freq_str = (st.nextToken()).trim();
-//            }
-//
-//            if ( st.hasMoreTokens() ) t_cl.setText( (st.nextToken()).trim().replace("L=", "").replace("C=", "") );
-//            if ( st.hasMoreTokens() ) t_r.setText( replaceOhm ((st.nextToken()).trim().replace("R=", "")) );
-//            if ( st.hasMoreTokens() ) t_eqs.setText( (st.nextToken()).trim() ); // Eq S
-//            if ( st.hasMoreTokens() ) t_z.setText( replaceOhm ((st.nextToken()).trim().replace("Z=", "")) );
-//            if ( st.hasMoreTokens() ) t_qtg.setText( (st.nextToken()).trim().replace("Q=", "").replace("tg=", "") );
 
         }
 
