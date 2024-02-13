@@ -30,6 +30,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +72,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private TextView t_ufd_upp, t_ufd_ave, t_ufd_rms, t_ufd_f, t_ufd_t, t_ufd_d, t_ufd_n;
     private TextView t_gen_wave, t_gen_dummy, t_gen_freq, t_gen_plus, t_gen_minus;
     private TextView t_cl, t_z, t_r, t_eqs, t_qtg;
+    private CheckBox cb_rlc_auto, cb_rlc_95, cb_rlc_1k, cb_rlc_10k, cb_rlc_95k, cb_rlc_160k;
     // si * finish
 
     private TextUtil.HexWatcher hexWatcher;
@@ -104,7 +107,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         deviceId = getArguments().getInt("device");
         portNum = getArguments().getInt("port");
         baudRate = getArguments().getInt("baud");
-        bm8232_mode = BM8232_MODE.NONE;
+        //bm8232_mode = BM8232_MODE.NONE;
+        bm8232_mode = BM8232_MODE.RLC_METER;
     }
 
     @Override
@@ -210,6 +214,13 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         t_r = view.findViewById(R.id.TextR);
         t_eqs = view.findViewById(R.id.TextEqS);
         t_qtg = view.findViewById(R.id.TextQtg);
+
+        cb_rlc_auto = view.findViewById(R.id.checkBoxAuto);
+        cb_rlc_95 = view.findViewById(R.id.checkBox95Hz);
+        cb_rlc_1k = view.findViewById(R.id.checkBox1kHz);
+        cb_rlc_10k = view.findViewById(R.id.checkBox10kHz);
+        cb_rlc_95k = view.findViewById(R.id.checkBox95kHz);
+        cb_rlc_160k = view.findViewById(R.id.checkBox160kHz);
         // * si
 
         sendText = view.findViewById(R.id.send_text);
@@ -282,6 +293,133 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 }
             }
         });
+
+        cb_rlc_auto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
+                    cb_rlc_95.setChecked(false);
+                    cb_rlc_1k.setChecked(false);
+                    cb_rlc_10k.setChecked(false);
+                    cb_rlc_95k.setChecked(false);
+                    cb_rlc_160k.setChecked(false);
+                }
+                else {
+                    cb_rlc_95.setChecked(true);
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("f95\r");
+                }
+            }
+        });
+
+        cb_rlc_95.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("f95\r");
+                    cb_rlc_auto.setChecked(false);
+                    cb_rlc_1k.setChecked(false);
+                    cb_rlc_10k.setChecked(false);
+                    cb_rlc_95k.setChecked(false);
+                    cb_rlc_160k.setChecked(false);
+                }
+                else {
+                    cb_rlc_auto.setChecked(true);
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
+                }
+            }
+        });
+
+        cb_rlc_1k.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("f1k\r");
+                    cb_rlc_auto.setChecked(false);
+                    cb_rlc_95.setChecked(false);
+                    cb_rlc_10k.setChecked(false);
+                    cb_rlc_95k.setChecked(false);
+                    cb_rlc_160k.setChecked(false);
+                }
+                else {
+                    cb_rlc_auto.setChecked(true);
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
+                }
+            }
+        });
+
+        cb_rlc_10k.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("f10k\r");
+                    cb_rlc_auto.setChecked(false);
+                    cb_rlc_95.setChecked(false);
+                    cb_rlc_1k.setChecked(false);
+                    cb_rlc_95k.setChecked(false);
+                    cb_rlc_160k.setChecked(false);
+                }
+                else {
+                    cb_rlc_auto.setChecked(true);
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
+                }
+            }
+        });
+
+        cb_rlc_10k.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("f10k\r");
+                    cb_rlc_auto.setChecked(false);
+                    cb_rlc_95.setChecked(false);
+                    cb_rlc_1k.setChecked(false);
+                    cb_rlc_95k.setChecked(false);
+                    cb_rlc_160k.setChecked(false);
+                }
+                else {
+                    cb_rlc_auto.setChecked(true);
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
+                }
+            }
+        });
+
+        cb_rlc_95k.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("f95k\r");
+                    cb_rlc_auto.setChecked(false);
+                    cb_rlc_95.setChecked(false);
+                    cb_rlc_1k.setChecked(false);
+                    cb_rlc_10k.setChecked(false);
+                    cb_rlc_160k.setChecked(false);
+                }
+                else {
+                    cb_rlc_auto.setChecked(true);
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
+                }
+            }
+        });
+
+        cb_rlc_160k.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("f160k\r");
+                    cb_rlc_auto.setChecked(false);
+                    cb_rlc_95.setChecked(false);
+                    cb_rlc_1k.setChecked(false);
+                    cb_rlc_10k.setChecked(false);
+                    cb_rlc_95k.setChecked(false);
+                }
+                else {
+                    cb_rlc_auto.setChecked(true);
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
+                }
+            }
+        });
+
         // si ** finish
 
         return view;
