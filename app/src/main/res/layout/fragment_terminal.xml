@@ -98,7 +98,7 @@
             android:layout_width="fill_parent"
             android:layout_height="170dp"
             android:orientation="vertical"
-            example:collapsedHeight="50dp"
+            example:collapsedHeight="30dp"
             example:content="@+id/valueGen"
             example:handle="@+id/expandGen"
             example:isviewgroup="true"
@@ -145,7 +145,7 @@
 
                         <TextView
                             android:id="@+id/TextGenFrequency"
-                            android:text="Frequency=1000Hz"
+                            android:text="Frequency= 1000Hz"
                             android:textStyle="bold"
                             android:typeface="monospace">
                         </TextView>
@@ -200,9 +200,9 @@
         <de.kai_morich.simple_usb_terminal.ExpandablePanel
             android:id="@+id/expandablePanelUfd"
             android:layout_width="fill_parent"
-            android:layout_height="260dp"
+            android:layout_height="180dp"
             android:orientation="vertical"
-            example:collapsedHeight="50dp"
+            example:collapsedHeight="30dp"
             example:content="@+id/value"
             example:handle="@+id/expand"
             example:isviewgroup="true"
@@ -211,7 +211,7 @@
             <LinearLayout
                 android:id="@+id/value"
                 android:layout_width="fill_parent"
-                android:layout_height="200dp"
+                android:layout_height="150dp"
                 android:orientation="vertical"
                 android:paddingStart="1dp">
 
@@ -302,55 +302,41 @@
 
 
                 <RadioGroup
-                    android:id="@+id/RLCRadioGroup"
+                    android:id="@+id/UfdRadioGroup"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="40dp"
                     android:orientation="horizontal">
 
+                    <TextView
+                        android:id="@+id/ufd_rg_header"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ofsset +1mA:"
+                        android:textStyle="bold"
+                        android:typeface="monospace" />
 
                     <RadioButton
-                        android:id="@+id/radio_auto"
+                        android:id="@+id/radio_offset_off"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_weight="1"
                         android:checked="true"
-                        android:text="@string/rbutt_auto" />
+                        android:text="Off" />
 
                     <RadioButton
-                        android:id="@+id/radio_f95"
+                        android:id="@+id/radio_offset_6v"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_weight="1"
-                        android:text="@string/rbutt_f95" />
+                        android:text="+6V" />
 
                     <RadioButton
-                        android:id="@+id/radio_f1k"
+                        android:id="@+id/radio_offset_26v"
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
                         android:layout_weight="1"
-                        android:text="@string/rbutt_f1k" />
-
-                    <RadioButton
-                        android:id="@+id/radio_f10k"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:text="@string/rbutt_f10k" />
-
-                    <RadioButton
-                        android:id="@+id/radio_f95k"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:text="@string/rbutt_f95k" />
-
-                    <RadioButton
-                        android:id="@+id/radio_f160k"
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_weight="1"
-                        android:text="@string/rbutt_f160k" />
+                        android:text="+26V" />
 
                 </RadioGroup>
 
@@ -387,9 +373,9 @@
         <de.kai_morich.simple_usb_terminal.ExpandablePanel
             android:id="@+id/expandablePanelRLC"
             android:layout_width="fill_parent"
-            android:layout_height="220dp"
+            android:layout_height="260dp"
             android:orientation="vertical"
-            example:collapsedHeight="50dp"
+            example:collapsedHeight="30dp"
             example:content="@+id/valueRLC"
             example:handle="@+id/expandRLCButton"
             example:isviewgroup="true"
@@ -398,7 +384,7 @@
             <LinearLayout
                 android:id="@+id/valueRLC"
                 android:layout_width="fill_parent"
-                android:layout_height="180dp"
+                android:layout_height="220dp"
                 android:orientation="vertical"
                 android:paddingStart="1dp"
                 android:weightSum="200">
