@@ -29,16 +29,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -73,6 +76,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private TextView t_gen_wave, t_gen_dummy, t_gen_freq, t_gen_plus, t_gen_minus;
     private TextView t_cl, t_z, t_r, t_eqs, t_qtg;
     private CheckBox cb_rlc_auto, cb_rlc_95, cb_rlc_1k, cb_rlc_10k, cb_rlc_95k, cb_rlc_160k;
+    SwitchCompat swRelative;
+    Spinner eqs_spinner;
     // si * finish
 
     private TextUtil.HexWatcher hexWatcher;
@@ -221,6 +226,10 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         cb_rlc_10k = view.findViewById(R.id.checkBox10kHz);
         cb_rlc_95k = view.findViewById(R.id.checkBox95kHz);
         cb_rlc_160k = view.findViewById(R.id.checkBox160kHz);
+
+        swRelative = view.findViewById(R.id.relative_sw);
+        eqs_spinner = view.findViewById(R.id.eqs_spinner);
+
         // * si
 
         sendText = view.findViewById(R.id.send_text);
@@ -261,7 +270,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 Button btn = (Button)handle;
                 btn.setText("Ufd");
 
-                panel_Ufd.setCollapsedHeight(200);
+                panel_Ufd.setCollapsedHeight(180);
             }
             public void onExpand(View handle, View content) {
                 Button btn = (Button)handle;
@@ -405,6 +414,20 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 }
             }
         });
+
+        swRelative.setOnCheckedChangeListener((buttonView, isChecked) ->  {
+            if (isChecked) {
+                send("rel\r");
+            } else {
+                send("abs\r");
+            }
+        });
+
+        String[] eqs_spinner_values = { "Auto", "Ser", "Par"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_item, eqs_spinner_values);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        eqs_spinner.setAdapter(adapter);
+        eqs_spinner.setPrompt("Title");
 
         // si ** finish
 
