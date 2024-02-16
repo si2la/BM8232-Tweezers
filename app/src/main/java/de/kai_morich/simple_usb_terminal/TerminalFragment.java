@@ -29,6 +29,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -428,6 +429,26 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         eqs_spinner.setAdapter(adapter);
         eqs_spinner.setPrompt("Title");
+
+        eqs_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                String choice = eqs_spinner.getSelectedItem().toString();
+                if (choice.equals("Auto") && bm8232_mode == BM8232_MODE.RLC_METER)  {
+                    send("auto\r");
+                }
+                if (choice.equals("Par") && bm8232_mode == BM8232_MODE.RLC_METER)  {
+                    send("par\r");
+                }
+                if (choice.equals("Ser") && bm8232_mode == BM8232_MODE.RLC_METER)  {
+                    send("ser\r");
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
 
         // si ** finish
 
