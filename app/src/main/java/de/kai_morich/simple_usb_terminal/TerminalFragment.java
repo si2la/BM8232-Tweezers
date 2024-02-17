@@ -233,14 +233,14 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         // * si
 
-        sendText = view.findViewById(R.id.send_text);
-        hexWatcher = new TextUtil.HexWatcher(sendText);
-        hexWatcher.enable(hexEnabled);
-        sendText.addTextChangedListener(hexWatcher);
-        sendText.setHint(hexEnabled ? "HEX mode" : "");
-
-        View sendBtn = view.findViewById(R.id.send_btn);
-        sendBtn.setOnClickListener(v -> send(sendText.getText().toString()));
+//        sendText = view.findViewById(R.id.send_text);
+//        hexWatcher = new TextUtil.HexWatcher(sendText);
+//        hexWatcher.enable(hexEnabled);
+//        sendText.addTextChangedListener(hexWatcher);
+//        sendText.setHint(hexEnabled ? "HEX mode" : "");
+//
+//        View sendBtn = view.findViewById(R.id.send_btn);
+//        sendBtn.setOnClickListener(v -> send(sendText.getText().toString()));
         controlLines = new ControlLines(view);
 
         // si ** start
@@ -256,6 +256,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             public void onExpand(View handle, View content) {
                 Button btn_rlc = (Button)handle;
                 panel_RLC.setCollapsedHeight(60);
+                panel_Gen.hardCollapse();
+                panel_Ufd.hardCollapse();
                 btn_rlc.setText("<<");
                 if (bm8232_mode != BM8232_MODE.RLC_METER) {
                     bm8232_mode = BM8232_MODE.RLC_METER;
@@ -276,6 +278,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             public void onExpand(View handle, View content) {
                 Button btn = (Button)handle;
                 panel_Ufd.setCollapsedHeight(60);
+                panel_RLC.hardCollapse();
+                panel_Gen.hardCollapse();
                 btn.setText("<<");
                 if (bm8232_mode != BM8232_MODE.U_F_DIODE) {
                     bm8232_mode = BM8232_MODE.U_F_DIODE;
@@ -296,6 +300,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             public void onExpand(View handle, View content) {
                 Button btn_gen = (Button)handle;
                 panel_Gen.setCollapsedHeight(60);
+                panel_RLC.hardCollapse();
+                panel_Ufd.hardCollapse();
                 btn_gen.setText("<<");
                 if (bm8232_mode != BM8232_MODE.GENERATOR) {
                     bm8232_mode = BM8232_MODE.GENERATOR;

@@ -84,6 +84,25 @@ public class ExpandablePanel extends LinearLayout {
         mAnimationDuration = animationDuration;
     }
 
+    public void hardCollapse() {
+        Animation a;
+        if (mExpanded) {
+            a = new ExpandAnimation(mContentHeight, mCollapsedHeight);
+            mListener.onCollapse(mHandle, mContent);
+
+            a.setDuration(mAnimationDuration);
+            if (mContent.getLayoutParams().height == 0) //Need to do this or else the animation will not play if the height is 0
+            {
+                android.view.ViewGroup.LayoutParams lp = mContent.getLayoutParams();
+                lp.height = 1;
+                mContent.setLayoutParams(lp);
+                mContent.requestLayout();
+            }
+            mContent.startAnimation(a);
+            mExpanded = !mExpanded;
+        }
+    }
+
     @Override
     protected void onFinishInflate() {
         super.onFinishInflate();
