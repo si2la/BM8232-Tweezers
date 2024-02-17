@@ -374,7 +374,7 @@
         <de.kai_morich.simple_usb_terminal.ExpandablePanel
             android:id="@+id/expandablePanelRLC"
             android:layout_width="fill_parent"
-            android:layout_height="260dp"
+            android:layout_height="254dp"
             android:orientation="vertical"
             example:collapsedHeight="28dp"
             example:content="@+id/valueRLC"

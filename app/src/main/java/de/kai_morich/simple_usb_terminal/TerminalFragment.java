@@ -35,6 +35,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +56,6 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.EnumSet;
-import java.util.StringTokenizer;
 
 public class TerminalFragment extends Fragment implements ServiceConnection, SerialListener {
 
@@ -79,6 +79,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private CheckBox cb_rlc_auto, cb_rlc_95, cb_rlc_1k, cb_rlc_10k, cb_rlc_95k, cb_rlc_160k;
     SwitchCompat swRelative;
     Spinner eqs_spinner;
+    RadioButton rb_o_off, rb_o_6, rb_o_26;
     // si * finish
 
     private TextUtil.HexWatcher hexWatcher;
@@ -453,6 +454,30 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             }
             @Override
             public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+        rb_o_off = view.findViewById(R.id.radio_offset_off);
+        rb_o_off.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                send("b0\r");
+            }
+        });
+
+        rb_o_6 = view.findViewById(R.id.radio_offset_6v);
+        rb_o_6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                send("b6\r");
+            }
+        });
+
+        rb_o_26 = view.findViewById(R.id.radio_offset_26v);
+        rb_o_26.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                send("b26\r");
             }
         });
 
