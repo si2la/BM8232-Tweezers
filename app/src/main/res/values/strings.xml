@@ -13,5 +13,6 @@
 
     <string name="set_relative">Set relative</string>
     <string name="eqs_spinner_text">Eq S</string>
+    <string name="gen_type_spinner_text">Wave</string>
 
 </resources>

@@ -74,11 +74,11 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     // si * start
     private ExpandablePanel panel_RLC, panel_Ufd, panel_Gen;
     private TextView t_ufd_upp, t_ufd_ave, t_ufd_rms, t_ufd_f, t_ufd_t, t_ufd_d, t_ufd_n;
-    private TextView t_gen_wave, t_gen_dummy, t_gen_freq, t_gen_plus, t_gen_minus;
+    private TextView t_gen_wave, t_gen_freq, t_gen_plus, t_gen_minus;
     private TextView t_cl, t_z, t_r, t_eqs, t_qtg;
     private CheckBox cb_rlc_auto, cb_rlc_95, cb_rlc_1k, cb_rlc_10k, cb_rlc_95k, cb_rlc_160k;
     SwitchCompat swRelative;
-    Spinner eqs_spinner;
+    Spinner eqs_spinner, gen_type_spinner;
     RadioButton rb_o_off, rb_o_6, rb_o_26;
     // si * finish
 
@@ -211,7 +211,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         t_ufd_upp = view.findViewById(R.id.TextUfdUpp);
 
         t_gen_wave = view.findViewById(R.id.TextGenWave);
-        t_gen_dummy = view.findViewById(R.id.TextGenDummy);
         t_gen_freq = view.findViewById(R.id.TextGenFrequency);
         t_gen_plus = view.findViewById(R.id.TextGenPlus);
         t_gen_minus = view.findViewById(R.id.TextGenMinus);
@@ -231,6 +230,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         swRelative = view.findViewById(R.id.relative_sw);
         eqs_spinner = view.findViewById(R.id.eqs_spinner);
+        gen_type_spinner = view.findViewById(R.id.gen_type_spinner);
+
 
         // * si
 
@@ -478,6 +479,47 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             @Override
             public void onClick(View view) {
                 send("b26\r");
+            }
+        });
+
+        String[] wave_type_spinner_values = { "Sinus 30mV", "Sinus 300mV", "Sinus 3V", "PWM 50Hz", "PWM 2kHz", "PWM 50kHz", "Serial", "NoiseAuto"};
+        ArrayAdapter<String> w_adapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_item, wave_type_spinner_values);
+        w_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        gen_type_spinner.setAdapter(w_adapter);
+        gen_type_spinner.setPrompt("Title");
+
+        gen_type_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                String choice = gen_type_spinner.getSelectedItem().toString();
+                if (choice.equals("Sinus 30mV") && bm8232_mode == BM8232_MODE.GENERATOR)  {
+                    send("sin003\r");
+                }
+                if (choice.equals("Sinus 300mV") && bm8232_mode == BM8232_MODE.GENERATOR)  {
+                    send("sin03\r");
+                }
+                if (choice.equals("Sinus 3V") && bm8232_mode == BM8232_MODE.GENERATOR)  {
+                    send("sin3\r");
+                }
+                if (choice.equals("PWM 50Hz") && bm8232_mode == BM8232_MODE.GENERATOR)  {
+                    send("pwm50\r");
+                }
+                if (choice.equals("PWM 2kHz") && bm8232_mode == BM8232_MODE.GENERATOR)  {
+                    send("pwm2k\r");
+                }
+                if (choice.equals("PWM 50kHz") && bm8232_mode == BM8232_MODE.GENERATOR)  {
+                    send("pwm50k\r");
+                }
+                if (choice.equals("Serial") && bm8232_mode == BM8232_MODE.GENERATOR)  {
+                    send("uart\r");
+                }
+                if (choice.equals("NoiseAuto") && bm8232_mode == BM8232_MODE.GENERATOR)  {
+                    send("noise\r");
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
 

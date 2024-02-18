@@ -134,12 +134,11 @@
                             android:typeface="monospace">
                         </TextView>
 
-                        <TextView
-                            android:id="@+id/TextGenDummy"
-                            android:text="Sinus 300 mV"
-                            android:textStyle="bold"
-                            android:typeface="monospace">
-                        </TextView>
+                        <Spinner
+                            android:id="@+id/gen_type_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:text="@string/gen_type_spinner_text" />
 
                     </TableRow>
 
