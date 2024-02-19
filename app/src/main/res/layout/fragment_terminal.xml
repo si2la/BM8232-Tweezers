@@ -152,15 +152,29 @@
                         </TextView>
 
                         <TextView
-                            android:id="@+id/TextGenMinus"
-                            android:text="-"
+                            android:text=""
                             android:textStyle="bold"
                             android:typeface="monospace">
                         </TextView>
 
-                        <TextView
-                            android:id="@+id/TextGenPlus"
+                        <Button
+                            android:id="@+id/ButtGenMinus"
+                            android:text="-"
+                            android:layout_width="50dp"
+                            android:textStyle="bold"
+                            android:typeface="monospace">
+                        </Button>
+
+                        <Button
+                            android:id="@+id/ButtGenPlus"
                             android:text="+"
+                            android:layout_width="50dp"
+                            android:textStyle="bold"
+                            android:typeface="monospace">
+                        </Button>
+
+                        <TextView
+                            android:text=" "
                             android:textStyle="bold"
                             android:typeface="monospace">
                         </TextView>
@@ -290,9 +304,16 @@
                             android:typeface="monospace">
                         </TextView>
 
+                        <Button
+                            android:id="@+id/UfdResetButton"
+                            android:text="Reset"
+                            android:layout_width="60dp"
+                            android:textStyle="bold"
+                            android:typeface="monospace">
+                        </Button>
+
                         <TextView
-                            android:id="@+id/TextUfdResetButton"
-                            android:text="00.00"
+                            android:text="    "
                             android:textStyle="bold"
                             android:typeface="monospace">
                         </TextView>

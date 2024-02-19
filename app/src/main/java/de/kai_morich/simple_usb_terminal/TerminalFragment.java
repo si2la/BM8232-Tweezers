@@ -74,12 +74,13 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     // si * start
     private ExpandablePanel panel_RLC, panel_Ufd, panel_Gen;
     private TextView t_ufd_upp, t_ufd_ave, t_ufd_rms, t_ufd_f, t_ufd_t, t_ufd_d, t_ufd_n;
-    private TextView t_gen_wave, t_gen_freq, t_gen_plus, t_gen_minus;
+    private TextView t_gen_wave, t_gen_freq;
     private TextView t_cl, t_z, t_r, t_eqs, t_qtg;
     private CheckBox cb_rlc_auto, cb_rlc_95, cb_rlc_1k, cb_rlc_10k, cb_rlc_95k, cb_rlc_160k;
     SwitchCompat swRelative;
     Spinner eqs_spinner, gen_type_spinner;
     RadioButton rb_o_off, rb_o_6, rb_o_26;
+    Button butt_gen_plus, butt_gen_minus, ufd_reset_butt;
     // si * finish
 
     private TextUtil.HexWatcher hexWatcher;
@@ -212,8 +213,9 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         t_gen_wave = view.findViewById(R.id.TextGenWave);
         t_gen_freq = view.findViewById(R.id.TextGenFrequency);
-        t_gen_plus = view.findViewById(R.id.TextGenPlus);
-        t_gen_minus = view.findViewById(R.id.TextGenMinus);
+        butt_gen_plus = view.findViewById(R.id.ButtGenPlus);
+        butt_gen_minus = view.findViewById(R.id.ButtGenMinus);
+        ufd_reset_butt = view.findViewById(R.id.UfdResetButton);
 
         t_cl = view.findViewById(R.id.TextCL);
         t_z = view.findViewById(R.id.TextZ);
@@ -523,6 +525,27 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             }
         });
 
+        butt_gen_plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                send("+");
+            }
+        });
+
+        butt_gen_minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                send("-");
+            }
+        });
+
+        ufd_reset_butt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                send("res\r");
+            }
+        });
+
         // si ** finish
 
         return view;
@@ -776,6 +799,18 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             // Gen message handler
             f_ind = msgi.indexOf("Frequency=");
             if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("Hz");
+            if ( f_ind >= 0 && l_ind >= 0 ) t_gen_freq.setText(msgi.substring(f_ind, f_ind + l_ind + 2));
+
+            f_ind = msgi.indexOf("DutyCycle=");
+            if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("%");
+            if ( f_ind >= 0 && l_ind >= 0 ) t_gen_freq.setText(msgi.substring(f_ind, f_ind + l_ind + 1));
+
+            f_ind = msgi.indexOf("UART");
+            if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("bps");
+            if ( f_ind >= 0 && l_ind >= 0 ) t_gen_freq.setText(msgi.substring(f_ind, f_ind + l_ind + 3));
+
+            f_ind = msgi.indexOf("Amplitude=");
+            if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf("mV");
             if ( f_ind >= 0 && l_ind >= 0 ) t_gen_freq.setText(msgi.substring(f_ind, f_ind + l_ind + 2));
         }
 
