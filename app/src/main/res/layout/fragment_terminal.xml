@@ -95,7 +95,7 @@
         android:layout_height="wrap_content">
 
 
-        <de.kai_morich.simple_usb_terminal.ExpandablePanel
+        <ru.learn2prog.bm8232_tweezers.ExpandablePanel
             android:id="@+id/expandablePanelGen"
             android:layout_width="fill_parent"
             android:layout_height="170dp"
@@ -210,9 +210,9 @@
                     android:layout_weight="70"
                     android:text="Gen" />
             </LinearLayout>
-        </de.kai_morich.simple_usb_terminal.ExpandablePanel>
+        </ru.learn2prog.bm8232_tweezers.ExpandablePanel>
 
-        <de.kai_morich.simple_usb_terminal.ExpandablePanel
+        <ru.learn2prog.bm8232_tweezers.ExpandablePanel
             android:id="@+id/expandablePanelUfd"
             android:layout_width="fill_parent"
             android:layout_height="200dp"
@@ -389,9 +389,9 @@
                     android:layout_weight="70"
                     android:text="Ufd" />
             </LinearLayout>
-        </de.kai_morich.simple_usb_terminal.ExpandablePanel>
+        </ru.learn2prog.bm8232_tweezers.ExpandablePanel>
 
-        <de.kai_morich.simple_usb_terminal.ExpandablePanel
+        <ru.learn2prog.bm8232_tweezers.ExpandablePanel
             android:id="@+id/expandablePanelRLC"
             android:layout_width="fill_parent"
             android:layout_height="254dp"
@@ -591,7 +591,7 @@
                     android:layout_weight="70"
                     android:text="RLC" />
             </LinearLayout>
-        </de.kai_morich.simple_usb_terminal.ExpandablePanel>
+        </ru.learn2prog.bm8232_tweezers.ExpandablePanel>
 
       </LinearLayout>
 

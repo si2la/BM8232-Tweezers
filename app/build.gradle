@@ -9,7 +9,7 @@ android {
         minSdkVersion 18
         vectorDrawables.useSupportLibrary true
 
-        applicationId "de.kai_morich.simple_usb_terminal"
+        applicationId "ru.learn2prog.bm8232_tweezers"
         versionCode 1
         versionName "1.0"
     }
@@ -23,7 +23,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'de.kai_morich.simple_usb_terminal'
+    namespace 'ru.learn2prog.bm8232_tweezers'
 }
 
 dependencies {

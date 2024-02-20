@@ -1,4 +1,4 @@
-package de.kai_morich.simple_usb_terminal;
+package ru.learn2prog.bm8232_tweezers;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;

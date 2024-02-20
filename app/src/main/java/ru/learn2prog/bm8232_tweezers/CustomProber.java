@@ -1,4 +1,4 @@
-package de.kai_morich.simple_usb_terminal;
+package ru.learn2prog.bm8232_tweezers;
 
 import com.hoho.android.usbserial.driver.FtdiSerialDriver;
 import com.hoho.android.usbserial.driver.ProbeTable;
