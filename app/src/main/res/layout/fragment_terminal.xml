@@ -546,7 +546,7 @@
                         android:id="@+id/relative_sw"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
-                        android:checked="true"
+                        android:checked="false"
                         android:layout_marginStart="8dp"
                         android:text="@string/set_relative"/>
 

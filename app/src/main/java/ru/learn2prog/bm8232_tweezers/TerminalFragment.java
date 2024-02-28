@@ -826,14 +826,14 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
             f_ind = msgi.indexOf("R=");
             if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf(","); else l_ind = -1;
-            if ( f_ind >= 0 && l_ind >= 0 ) t_r.setText(replaceOhm (msgi.substring(f_ind, f_ind + l_ind)) );
+            if ( f_ind >= 0 && l_ind >= 0 ) t_r.setText(replaceOhm (msgi.substring(f_ind, f_ind + l_ind).trim()) );
             //if ( l_ind >= 0 ) f_ind += l_ind;
             //if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf(","); //else l_ind = -1;
             //if ( f_ind >= 0 && l_ind >= 0 ) t_r.setText(msgi.substring(f_ind+2, f_ind + 9) );
 
             f_ind = msgi.indexOf("Z=");
             if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf(","); else l_ind = -1;
-            if ( f_ind >= 0 && l_ind >= 0 ) t_z.setText(replaceOhm (msgi.substring(f_ind, f_ind + l_ind)) );
+            if ( f_ind >= 0 && l_ind >= 0 ) t_z.setText(replaceOhm (msgi.substring(f_ind, f_ind + l_ind).trim()) );
 
             f_ind = msgi.indexOf("Q=");
             if ( f_ind >= 0) l_ind = msgi.substring(f_ind).indexOf(","); else l_ind = -1;
