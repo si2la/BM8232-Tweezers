@@ -1,6 +1,6 @@
 # BM8232-Tweesers
 
-The open project "BM8232 Tweezers" was created to support a portable RLC-meter, authored by Russian engineer A. Byvshikh.
+The open project "BM8232 Tweezers" was created to support a portable RLC-meter.
 The Android application allows you to receive data via USB-host (OTG) from the RLC meter and change its operating modes.
 Based on the code from Kai Morich project [SimpleUSBTerminal](https://github.com/kai-morich/SimpleUsbTerminal).
 
