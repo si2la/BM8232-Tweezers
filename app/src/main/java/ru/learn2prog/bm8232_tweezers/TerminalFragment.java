@@ -60,7 +60,7 @@ import java.util.EnumSet;
 public class TerminalFragment extends Fragment implements ServiceConnection, SerialListener {
 
     private enum Connected { False, Pending, True }
-    private enum BM8232_MODE { NONE, RLC_METER, U_F_DIODE, GENERATOR}
+    private enum BM8232_MODE { NONE, ALL_RLC, RLC_METER, U_F_DIODE, GENERATOR}
     private  BM8232_MODE bm8232_mode;
     private final BroadcastReceiver broadcastReceiver;
     private int deviceId, portNum, baudRate;
@@ -72,7 +72,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private ControlLines controlLines;
 
     // si * start
-    private ExpandablePanel panel_RLC, panel_Ufd, panel_Gen;
+    private ExpandablePanel panel_RLC, panel_all_RLC, panel_Ufd, panel_Gen;
     private TextView t_ufd_upp, t_ufd_ave, t_ufd_rms, t_ufd_f, t_ufd_t, t_ufd_d, t_ufd_n;
     private TextView t_gen_wave, t_gen_freq;
     private TextView t_cl, t_z, t_r, t_eqs, t_qtg;
@@ -116,7 +116,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         portNum = getArguments().getInt("port");
         baudRate = getArguments().getInt("baud");
         //bm8232_mode = BM8232_MODE.NONE;
-        bm8232_mode = BM8232_MODE.RLC_METER;
+        bm8232_mode = BM8232_MODE.ALL_RLC;
     }
 
     @Override
@@ -260,11 +260,35 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             public void onExpand(View handle, View content) {
                 Button btn_rlc = (Button)handle;
                 panel_RLC.setCollapsedHeight(60);
+                panel_all_RLC.hardCollapse();
                 panel_Gen.hardCollapse();
                 panel_Ufd.hardCollapse();
                 btn_rlc.setText("<<");
                 if (bm8232_mode != BM8232_MODE.RLC_METER) {
                     bm8232_mode = BM8232_MODE.RLC_METER;
+                    send("rlc\r");
+                }
+            }
+        });
+
+        panel_all_RLC = view.findViewById(R.id.expandablePanelAllRLC);
+
+        panel_all_RLC.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
+            public void onCollapse(View handle, View content) {
+                Button btn_rlc = (Button)handle;
+                btn_rlc.setText("All RLC");
+
+                panel_RLC.setCollapsedHeight(200);
+            }
+            public void onExpand(View handle, View content) {
+                Button btn_rlc = (Button)handle;
+                panel_all_RLC.setCollapsedHeight(60);
+                panel_RLC.hardCollapse();
+                panel_Gen.hardCollapse();
+                panel_Ufd.hardCollapse();
+                //btn_rlc.setText("<<");
+                if (bm8232_mode != BM8232_MODE.ALL_RLC) {
+                    bm8232_mode = BM8232_MODE.ALL_RLC;
                     send("rlc\r");
                 }
             }
@@ -283,6 +307,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 Button btn = (Button)handle;
                 panel_Ufd.setCollapsedHeight(60);
                 panel_RLC.hardCollapse();
+                panel_all_RLC.hardCollapse();
                 panel_Gen.hardCollapse();
                 btn.setText("<<");
                 if (bm8232_mode != BM8232_MODE.U_F_DIODE) {
@@ -305,6 +330,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 Button btn_gen = (Button)handle;
                 panel_Gen.setCollapsedHeight(60);
                 panel_RLC.hardCollapse();
+                panel_all_RLC.hardCollapse();
                 panel_Ufd.hardCollapse();
                 btn_gen.setText("<<");
                 if (bm8232_mode != BM8232_MODE.GENERATOR) {
