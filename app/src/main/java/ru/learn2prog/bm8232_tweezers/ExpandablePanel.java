@@ -154,13 +154,14 @@ public class ExpandablePanel extends LinearLayout {
     private class PanelToggler implements OnClickListener {
         public void onClick(View v) {
             Animation a;
-            if (mExpanded) {
-                a = new ExpandAnimation(mContentHeight, mCollapsedHeight);
-                mListener.onCollapse(mHandle, mContent);
-            } else {
+            //if (mExpanded) {
+                // TODO TODO TODO !!!
+                //a = new ExpandAnimation(mContentHeight, mCollapsedHeight);
+                //mListener.onCollapse(mHandle, mContent);
+            //} else {
                 a = new ExpandAnimation(mCollapsedHeight, mContentHeight);
                 mListener.onExpand(mHandle, mContent);
-            }
+            //}
             a.setDuration(mAnimationDuration);
             if(mContent.getLayoutParams().height == 0) //Need to do this or else the animation will not play if the height is 0
             {

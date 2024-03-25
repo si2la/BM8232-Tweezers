@@ -252,21 +252,53 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         panel_RLC.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
             public void onCollapse(View handle, View content) {
-                Button btn_rlc = (Button)handle;
-                btn_rlc.setText("RLC");
+                //Button btn_rlc = (Button)handle;
+                //btn_rlc.setText("RLC");
 
                 panel_RLC.setCollapsedHeight(180);
             }
             public void onExpand(View handle, View content) {
-                Button btn_rlc = (Button)handle;
-                panel_RLC.setCollapsedHeight(60);
+                //Button btn_rlc = (Button)handle;
+                panel_RLC.setCollapsedHeight(140);
                 panel_all_RLC.hardCollapse();
                 panel_Gen.hardCollapse();
                 panel_Ufd.hardCollapse();
-                btn_rlc.setText("<<");
+                //btn_rlc.setText("<<");
                 if (bm8232_mode != BM8232_MODE.RLC_METER) {
                     bm8232_mode = BM8232_MODE.RLC_METER;
+
+                    cb_rlc_auto.setEnabled(true);
+                    cb_rlc_95.setEnabled(true);
+                    cb_rlc_1k.setEnabled(true);
+                    cb_rlc_10k.setEnabled(true);
+                    cb_rlc_95k.setEnabled(true);
+                    cb_rlc_160k.setEnabled(true);
+
                     send("rlc\r");
+
+                    if (cb_rlc_auto.isChecked()) send("fall\r");
+                    if (cb_rlc_95.isChecked()) send("f95\r");
+                    if (cb_rlc_1k.isChecked()) send("f1k\r");
+                    if (cb_rlc_10k.isChecked()) send("f10k\r");
+                    if (cb_rlc_95k.isChecked()) send("f95k\r");
+                    if (cb_rlc_160k.isChecked()) send("f160k\r");
+
+                    if ( swRelative.isChecked() ) {
+                        send("rel\r");
+                    } else {
+                        send("abs\r");
+                    }
+
+                    if (eqs_spinner.getSelectedItem().toString().equals("Auto")) {
+                        send("auto\r");
+                    }
+                    if (eqs_spinner.getSelectedItem().toString().equals("Ser")) {
+                        send("ser\r");
+                    }
+                    if (eqs_spinner.getSelectedItem().toString().equals("Par")) {
+                        send("par\r");
+                    }
+
                 }
             }
         });
@@ -275,13 +307,13 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         panel_all_RLC.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
             public void onCollapse(View handle, View content) {
-                Button btn_rlc = (Button)handle;
-                btn_rlc.setText("All RLC");
+                //Button btn_rlc = (Button)handle;
+                //btn_rlc.setText("All RLC");
 
                 panel_RLC.setCollapsedHeight(200);
             }
             public void onExpand(View handle, View content) {
-                Button btn_rlc = (Button)handle;
+                //Button btn_rlc = (Button)handle;
                 panel_all_RLC.setCollapsedHeight(60);
                 panel_RLC.hardCollapse();
                 panel_Gen.hardCollapse();
@@ -290,6 +322,15 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 if (bm8232_mode != BM8232_MODE.ALL_RLC) {
                     bm8232_mode = BM8232_MODE.ALL_RLC;
                     send("rlc\r");
+                    send("auto\r");
+                    send("rel\r");
+                    cb_rlc_auto.setEnabled(false);
+                    cb_rlc_95.setEnabled(false);
+                    cb_rlc_1k.setEnabled(false);
+                    cb_rlc_10k.setEnabled(false);
+                    cb_rlc_95k.setEnabled(false);
+                    cb_rlc_160k.setEnabled(false);
+
                 }
             }
         });
@@ -298,18 +339,18 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         panel_Ufd.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
             public void onCollapse(View handle, View content) {
-                Button btn = (Button)handle;
-                btn.setText("Ufd");
+                //Button btn = (Button)handle;
+                //btn.setText("Ufd");
 
                 panel_Ufd.setCollapsedHeight(180);
             }
             public void onExpand(View handle, View content) {
-                Button btn = (Button)handle;
+                //Button btn = (Button)handle;
                 panel_Ufd.setCollapsedHeight(60);
                 panel_RLC.hardCollapse();
                 panel_all_RLC.hardCollapse();
                 panel_Gen.hardCollapse();
-                btn.setText("<<");
+                //btn.setText("<<");
                 if (bm8232_mode != BM8232_MODE.U_F_DIODE) {
                     bm8232_mode = BM8232_MODE.U_F_DIODE;
                     send("ufd\r");
@@ -321,18 +362,18 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         panel_Gen.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
             public void onCollapse(View handle, View content) {
-                Button btn_gen = (Button)handle;
-                btn_gen.setText("Gen");
+                //Button btn_gen = (Button)handle;
+                //btn_gen.setText("Gen");
 
                 panel_Gen.setCollapsedHeight(180);
             }
             public void onExpand(View handle, View content) {
-                Button btn_gen = (Button)handle;
+                //Button btn_gen = (Button)handle;
                 panel_Gen.setCollapsedHeight(60);
                 panel_RLC.hardCollapse();
                 panel_all_RLC.hardCollapse();
                 panel_Ufd.hardCollapse();
-                btn_gen.setText("<<");
+                //btn_gen.setText("<<");
                 if (bm8232_mode != BM8232_MODE.GENERATOR) {
                     bm8232_mode = BM8232_MODE.GENERATOR;
                     send("gen\r");
@@ -344,7 +385,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("auto\r");
+                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("fall\r");
                     cb_rlc_95.setChecked(false);
                     cb_rlc_1k.setChecked(false);
                     cb_rlc_10k.setChecked(false);
@@ -380,22 +421,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_auto.setChecked(false);
                     cb_rlc_95.setChecked(false);
                     cb_rlc_10k.setChecked(false);
-                    cb_rlc_95k.setChecked(false);
-                    cb_rlc_160k.setChecked(false);
-                }
-                else {
-                }
-            }
-        });
-
-        cb_rlc_10k.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("f10k\r");
-                    cb_rlc_auto.setChecked(false);
-                    cb_rlc_95.setChecked(false);
-                    cb_rlc_1k.setChecked(false);
                     cb_rlc_95k.setChecked(false);
                     cb_rlc_160k.setChecked(false);
                 }
