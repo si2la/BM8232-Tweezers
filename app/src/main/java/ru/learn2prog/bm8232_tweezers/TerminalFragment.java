@@ -255,11 +255,11 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 //Button btn_rlc = (Button)handle;
                 //btn_rlc.setText("RLC");
 
-                panel_RLC.setCollapsedHeight(180);
+                panel_RLC.setCollapsedHeight(310);
             }
             public void onExpand(View handle, View content) {
                 //Button btn_rlc = (Button)handle;
-                panel_RLC.setCollapsedHeight(140);
+                panel_RLC.setCollapsedHeight(300);
                 panel_all_RLC.hardCollapse();
                 panel_Gen.hardCollapse();
                 panel_Ufd.hardCollapse();
@@ -354,6 +354,12 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 if (bm8232_mode != BM8232_MODE.U_F_DIODE) {
                     bm8232_mode = BM8232_MODE.U_F_DIODE;
                     send("ufd\r");
+                    cb_rlc_auto.setEnabled(false);
+                    cb_rlc_95.setEnabled(false);
+                    cb_rlc_1k.setEnabled(false);
+                    cb_rlc_10k.setEnabled(false);
+                    cb_rlc_95k.setEnabled(false);
+                    cb_rlc_160k.setEnabled(false);
                 }
             }
         });
@@ -369,7 +375,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             }
             public void onExpand(View handle, View content) {
                 //Button btn_gen = (Button)handle;
-                panel_Gen.setCollapsedHeight(60);
+                panel_Gen.setCollapsedHeight(80);
                 panel_RLC.hardCollapse();
                 panel_all_RLC.hardCollapse();
                 panel_Ufd.hardCollapse();
@@ -377,6 +383,12 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 if (bm8232_mode != BM8232_MODE.GENERATOR) {
                     bm8232_mode = BM8232_MODE.GENERATOR;
                     send("gen\r");
+                    cb_rlc_auto.setEnabled(false);
+                    cb_rlc_95.setEnabled(false);
+                    cb_rlc_1k.setEnabled(false);
+                    cb_rlc_10k.setEnabled(false);
+                    cb_rlc_95k.setEnabled(false);
+                    cb_rlc_160k.setEnabled(false);
                 }
             }
         });

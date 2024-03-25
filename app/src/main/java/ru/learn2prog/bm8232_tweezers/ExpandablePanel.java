@@ -170,8 +170,9 @@ public class ExpandablePanel extends LinearLayout {
                 mContent.setLayoutParams(lp);
                 mContent.requestLayout();
             }
-            mContent.startAnimation(a);
-            mExpanded = !mExpanded;
+            if (!mExpanded) mContent.startAnimation(a);
+            //mExpanded = !mExpanded;
+            if (!mExpanded) mExpanded = true;
         }
     }
 

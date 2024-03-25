@@ -394,9 +394,9 @@
         <ru.learn2prog.bm8232_tweezers.ExpandablePanel
             android:id="@+id/expandablePanelRLC"
             android:layout_width="fill_parent"
-            android:layout_height="254dp"
+            android:layout_height="320dp"
             android:orientation="vertical"
-            example:collapsedHeight="28dp"
+            example:collapsedHeight="120dp"
             example:content="@+id/valueRLC"
             example:handle="@+id/expandRLCButton"
             example:isviewgroup="true"
@@ -405,7 +405,7 @@
             <LinearLayout
                 android:id="@+id/valueRLC"
                 android:layout_width="fill_parent"
-                android:layout_height="220dp"
+                android:layout_height="300dp"
                 android:orientation="vertical"
                 android:paddingStart="1dp"
                 >
@@ -434,6 +434,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Auto"
                                     android:typeface="monospace"
+                                    android:enabled="false"
                                     android:checked="true">
                                 </CheckBox>
                                 <CheckBox
@@ -441,7 +442,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="95Hz"
-                                    android:typeface="monospace">
+                                    android:typeface="monospace"
+                                    android:enabled="false">
                                 </CheckBox>
                             </TableRow>
 
@@ -451,14 +453,16 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="1kHz"
-                                    android:typeface="monospace">
+                                    android:typeface="monospace"
+                                    android:enabled="false">
                                 </CheckBox>
                                 <CheckBox
                                     android:id="@+id/checkBox10kHz"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="10kHz"
-                                    android:typeface="monospace">
+                                    android:typeface="monospace"
+                                    android:enabled="false">
                                 </CheckBox>
                             </TableRow>
 
@@ -468,14 +472,16 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="95kHz"
-                                    android:typeface="monospace">
+                                    android:typeface="monospace"
+                                    android:enabled="false">
                                 </CheckBox>
                                 <CheckBox
                                     android:id="@+id/checkBox160kHz"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="160kHz"
-                                    android:typeface="monospace">
+                                    android:typeface="monospace"
+                                    android:enabled="false">
                                 </CheckBox>
                             </TableRow>
 
