@@ -240,7 +240,31 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         eqs_spinner = view.findViewById(R.id.eqs_spinner);
         gen_type_spinner = view.findViewById(R.id.gen_type_spinner);
 
-
+        t_cl_95hz = view.findViewById(R.id.TextCL95Hz);
+        t_r_95hz = view.findViewById(R.id.TextR95Hz);
+        t_z_95hz = view.findViewById(R.id.TextZ95Hz);
+        t_qtg_95hz = view.findViewById(R.id.TextQtg95Hz);
+        t_eqs_95hz = view.findViewById(R.id.TextEqS95Hz);
+        t_cl_1khz = view.findViewById(R.id.TextCL1kHz);
+        t_r_1khz = view.findViewById(R.id.TextR1kHz);
+        t_z_1khz = view.findViewById(R.id.TextZ1kHz);
+        t_qtg_1khz = view.findViewById(R.id.TextQtg1kHz);
+        t_eqs_1khz = view.findViewById(R.id.TextEqS1kHz);
+        t_cl_10khz = view.findViewById(R.id.TextCL10kHz);
+        t_r_10khz = view.findViewById(R.id.TextR10kHz);
+        t_z_10khz = view.findViewById(R.id.TextZ10kHz);
+        t_qtg_10khz = view.findViewById(R.id.TextQtg10kHz);
+        t_eqs_10khz = view.findViewById(R.id.TextEqS10kHz);
+        t_cl_95khz = view.findViewById(R.id.TextCL95kHz);
+        t_r_95khz = view.findViewById(R.id.TextR95kHz);
+        t_z_95khz = view.findViewById(R.id.TextZ95kHz);
+        t_qtg_95khz = view.findViewById(R.id.TextQtg95kHz);
+        t_eqs_95khz = view.findViewById(R.id.TextEqS95kHz);
+        t_cl_160khz = view.findViewById(R.id.TextCL160kHz);
+        t_r_160khz = view.findViewById(R.id.TextR160kHz);
+        t_z_160khz = view.findViewById(R.id.TextZ160kHz);
+        t_qtg_160khz = view.findViewById(R.id.TextQtg160kHz);
+        t_eqs_160khz = view.findViewById(R.id.TextEqS160kHz);
         // * si
 
 //        sendText = view.findViewById(R.id.send_text);
@@ -272,6 +296,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 //btn_rlc.setText("<<");
                 if (bm8232_mode != BM8232_MODE.RLC_METER) {
                     bm8232_mode = BM8232_MODE.RLC_METER;
+                    Toast.makeText(getActivity(), "RLC mode started", Toast.LENGTH_SHORT).show();
 
                     cb_rlc_auto.setEnabled(true);
                     cb_rlc_95.setEnabled(true);
@@ -279,6 +304,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_10k.setEnabled(true);
                     cb_rlc_95k.setEnabled(true);
                     cb_rlc_160k.setEnabled(true);
+                    gen_type_spinner.setEnabled(false);
 
                     send("rlc\r");
 
@@ -327,8 +353,10 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 //btn_rlc.setText("<<");
                 if (bm8232_mode != BM8232_MODE.ALL_RLC) {
                     bm8232_mode = BM8232_MODE.ALL_RLC;
+                    Toast.makeText(getActivity(), "Auto RLC mode started", Toast.LENGTH_SHORT).show();
+
                     send("rlc\r");
-                    send("auto\r");
+                    send("fall\r");
                     send("rel\r");
                     cb_rlc_auto.setEnabled(false);
                     cb_rlc_95.setEnabled(false);
@@ -336,6 +364,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_10k.setEnabled(false);
                     cb_rlc_95k.setEnabled(false);
                     cb_rlc_160k.setEnabled(false);
+                    gen_type_spinner.setEnabled(false);
 
                 }
             }
@@ -359,6 +388,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 //btn.setText("<<");
                 if (bm8232_mode != BM8232_MODE.U_F_DIODE) {
                     bm8232_mode = BM8232_MODE.U_F_DIODE;
+                    Toast.makeText(getActivity(), "Ufd mode started", Toast.LENGTH_SHORT).show();
+
                     send("ufd\r");
                     cb_rlc_auto.setEnabled(false);
                     cb_rlc_95.setEnabled(false);
@@ -366,6 +397,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_10k.setEnabled(false);
                     cb_rlc_95k.setEnabled(false);
                     cb_rlc_160k.setEnabled(false);
+                    gen_type_spinner.setEnabled(false);
                 }
             }
         });
@@ -388,6 +420,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 //btn_gen.setText("<<");
                 if (bm8232_mode != BM8232_MODE.GENERATOR) {
                     bm8232_mode = BM8232_MODE.GENERATOR;
+                    Toast.makeText(getActivity(), "Gen mode started", Toast.LENGTH_SHORT).show();
+
                     send("gen\r");
                     cb_rlc_auto.setEnabled(false);
                     cb_rlc_95.setEnabled(false);
@@ -395,6 +429,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_10k.setEnabled(false);
                     cb_rlc_95k.setEnabled(false);
                     cb_rlc_160k.setEnabled(false);
+                    gen_type_spinner.setEnabled(true);
                 }
             }
         });
@@ -921,6 +956,10 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         }
 
         if ( bm8232_mode == BM8232_MODE.ALL_RLC ) {
+            // ALL RLC message handler
+            f_ind = msgi.indexOf("F=");
+            if ( f_ind >= 0) msgi = msgi.substring(f_ind);
+
             StringTokenizer st;
             st = new StringTokenizer(msgi, ",");
             String freq_str = "";

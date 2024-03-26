@@ -929,7 +929,7 @@
                       android:layout_height="wrap_content"
                       android:layout_gravity="right"
                       android:layout_weight="70"
-                      android:text="ALL RLC" />
+                      android:text="AUTO RLC" />
               </LinearLayout>
           </ru.learn2prog.bm8232_tweezers.ExpandablePanel>
 
