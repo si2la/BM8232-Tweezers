@@ -56,6 +56,7 @@ import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.EnumSet;
+import java.util.StringTokenizer;
 
 public class TerminalFragment extends Fragment implements ServiceConnection, SerialListener {
 
@@ -76,11 +77,16 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private TextView t_ufd_upp, t_ufd_ave, t_ufd_rms, t_ufd_f, t_ufd_t, t_ufd_d, t_ufd_n;
     private TextView t_gen_wave, t_gen_freq;
     private TextView t_cl, t_z, t_r, t_eqs, t_qtg;
+    private TextView t_cl_95hz, t_r_95hz, t_z_95hz, t_qtg_95hz, t_eqs_95hz;
+    private TextView t_cl_1khz, t_r_1khz, t_z_1khz, t_qtg_1khz, t_eqs_1khz;
+    private TextView t_cl_10khz, t_r_10khz, t_z_10khz, t_qtg_10khz, t_eqs_10khz;
+    private TextView t_cl_95khz, t_r_95khz, t_z_95khz, t_qtg_95khz, t_eqs_95khz;
+    private TextView t_cl_160khz, t_r_160khz, t_z_160khz, t_qtg_160khz, t_eqs_160khz;
     private CheckBox cb_rlc_auto, cb_rlc_95, cb_rlc_1k, cb_rlc_10k, cb_rlc_95k, cb_rlc_160k;
-    SwitchCompat swRelative;
-    Spinner eqs_spinner, gen_type_spinner;
-    RadioButton rb_o_off, rb_o_6, rb_o_26;
-    Button butt_gen_plus, butt_gen_minus, ufd_reset_butt;
+    private SwitchCompat swRelative;
+    private Spinner eqs_spinner, gen_type_spinner;
+    private RadioButton rb_o_off, rb_o_6, rb_o_26;
+    private Button butt_gen_plus, butt_gen_minus, ufd_reset_butt;
     // si * finish
 
     private TextUtil.HexWatcher hexWatcher;
@@ -912,6 +918,51 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             f_ind = msgi.indexOf("Par");
             if ( f_ind >= 0 ) t_eqs.setText("Par");
 
+        }
+
+        if ( bm8232_mode == BM8232_MODE.ALL_RLC ) {
+            StringTokenizer st;
+            st = new StringTokenizer(msgi, ",");
+            String freq_str = "";
+            if ( st.hasMoreTokens() ) {
+                freq_str = (st.nextToken()).trim();
+            }
+
+            if ( freq_str.equals("F=95Hz") ) {
+                if ( st.hasMoreTokens() ) t_cl_95hz.setText( (st.nextToken()).trim().replace("L=", "").replace("C=", "") );
+                if ( st.hasMoreTokens() ) t_r_95hz.setText( replaceOhm ((st.nextToken()).trim().replace("R=", "")) );
+                if ( st.hasMoreTokens() ) t_eqs_95hz.setText( (st.nextToken()).trim() ); // Eq S
+                if ( st.hasMoreTokens() ) t_z_95hz.setText( replaceOhm ((st.nextToken()).trim().replace("Z=", "")) );
+                if ( st.hasMoreTokens() ) t_qtg_95hz.setText( (st.nextToken()).trim().replace("Q=", "").replace("tg=", "") );
+            }
+            if ( freq_str.equals("F=1kHz") ) {
+                if ( st.hasMoreTokens() ) t_cl_1khz.setText( (st.nextToken()).trim().replace("L=", "").replace("C=", "") );
+                if ( st.hasMoreTokens() ) t_r_1khz.setText( replaceOhm ((st.nextToken()).trim().replace("R=", "")) );
+                if ( st.hasMoreTokens() ) t_eqs_1khz.setText( (st.nextToken()).trim() ); // Eq S
+                if ( st.hasMoreTokens() ) t_z_1khz.setText( replaceOhm ((st.nextToken()).trim().replace("Z=", "")) );
+                if ( st.hasMoreTokens() ) t_qtg_1khz.setText( (st.nextToken()).trim().replace("Q=", "").replace("tg=", "") );
+            }
+            if ( freq_str.equals("F=10kHz") ) {
+                if ( st.hasMoreTokens() ) t_cl_10khz.setText( (st.nextToken()).trim().replace("L=", "").replace("C=", "") );
+                if ( st.hasMoreTokens() ) t_r_10khz.setText( replaceOhm ((st.nextToken()).trim().replace("R=", "")) );
+                if ( st.hasMoreTokens() ) t_eqs_10khz.setText( (st.nextToken()).trim() ); // Eq S
+                if ( st.hasMoreTokens() ) t_z_10khz.setText( replaceOhm ((st.nextToken()).trim().replace("Z=", "")) );
+                if ( st.hasMoreTokens() ) t_qtg_10khz.setText( (st.nextToken()).trim().replace("Q=", "").replace("tg=", "") );
+            }
+            if ( freq_str.equals("F=95kHz") ) {
+                if ( st.hasMoreTokens() ) t_cl_95khz.setText( (st.nextToken()).trim().replace("L=", "").replace("C=", "") );
+                if ( st.hasMoreTokens() ) t_r_95khz.setText( replaceOhm ((st.nextToken()).trim().replace("R=", "")) );
+                if ( st.hasMoreTokens() ) t_eqs_95khz.setText( (st.nextToken()).trim() ); // Eq S
+                if ( st.hasMoreTokens() ) t_z_95khz.setText( replaceOhm ((st.nextToken()).trim().replace("Z=", "")) );
+                if ( st.hasMoreTokens() ) t_qtg_95khz.setText( (st.nextToken()).trim().replace("Q=", "").replace("tg=", "") );
+            }
+            if ( freq_str.equals("F=160kHz") ) {
+                if ( st.hasMoreTokens() ) t_cl_160khz.setText( (st.nextToken()).trim().replace("L=", "").replace("C=", "") );
+                if ( st.hasMoreTokens() ) t_r_160khz.setText( replaceOhm ((st.nextToken()).trim().replace("R=", "")) );
+                if ( st.hasMoreTokens() ) t_eqs_160khz.setText( (st.nextToken()).trim() ); // Eq S
+                if ( st.hasMoreTokens() ) t_z_160khz.setText( replaceOhm ((st.nextToken()).trim().replace("Z=", "")) );
+                if ( st.hasMoreTokens() ) t_qtg_160khz.setText( (st.nextToken()).trim().replace("Q=", "").replace("tg=", "") );
+            }
         }
 
     }
