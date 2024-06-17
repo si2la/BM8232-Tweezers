@@ -1,6 +1,7 @@
 package ru.learn2prog.bm8232_tweezers;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -27,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -200,6 +202,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     /*
      * UI
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_terminal, container, false);
@@ -629,18 +632,108 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             }
         });
 
-        butt_gen_plus.setOnClickListener(new View.OnClickListener() {
+//        butt_gen_plus.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                send("+");
+//            }
+//        });
+
+        butt_gen_plus.setOnTouchListener(new View.OnTouchListener() {
+
+            private Handler mHandler;
+            // flag
+            private boolean downWithoutUp = false;
+
+
             @Override
-            public void onClick(View view) {
-                send("+");
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_DOWN:
+                        //set Handler on
+                        if (mHandler != null) return true;
+                        mHandler = new Handler();
+                        mHandler.postDelayed(runnable, 500); //holding period after which Handler will be triggered in UP (ms)
+
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        //set Handler off
+                        if (mHandler == null) return true;
+                        mHandler.removeCallbacks(runnable);
+                        mHandler = null;
+
+                        if (!downWithoutUp) { //if UP didn't work
+                            send("+");
+                        }
+
+                        downWithoutUp = false;
+                        return true;
+                }
+                return false;
             }
+
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    downWithoutUp = true; //set the flag to true, UP worked
+                    send("+");
+                    mHandler.postDelayed(this, 250);
+                }
+            };
+
         });
 
-        butt_gen_minus.setOnClickListener(new View.OnClickListener() {
+//        butt_gen_minus.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                send("-");
+//            }
+//        });
+
+        butt_gen_minus.setOnTouchListener(new View.OnTouchListener() {
+
+            private Handler mHandler;
+            // flag
+            private boolean downWithoutUp = false;
+
+
             @Override
-            public void onClick(View view) {
-                send("-");
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction() & MotionEvent.ACTION_MASK) {
+                    case MotionEvent.ACTION_DOWN:
+                        //set Handler on
+                        if (mHandler != null) return true;
+                        mHandler = new Handler();
+                        mHandler.postDelayed(runnable, 500); //holding period after which Handler will be triggered in UP (ms)
+
+                        return true;
+                    case MotionEvent.ACTION_UP:
+                        //set Handler off
+                        if (mHandler == null) return true;
+                        mHandler.removeCallbacks(runnable);
+                        mHandler = null;
+
+                        if (!downWithoutUp) { //if UP didn't work
+                            send("-");
+                        }
+
+                        downWithoutUp = false;
+                        return true;
+                }
+                return false;
             }
+
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    downWithoutUp = true; //set the flag to true, UP worked
+                    send("-");
+                    mHandler.postDelayed(this, 250);
+                }
+            };
+
         });
 
         ufd_reset_butt.setOnClickListener(new View.OnClickListener() {
