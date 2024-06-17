@@ -292,7 +292,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             }
             public void onExpand(View handle, View content) {
                 //Button btn_rlc = (Button)handle;
-                panel_RLC.setCollapsedHeight(300);
+                panel_RLC.setCollapsedHeight(60);
                 panel_all_RLC.hardCollapse();
                 panel_Gen.hardCollapse();
                 panel_Ufd.hardCollapse();
@@ -345,7 +345,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 //Button btn_rlc = (Button)handle;
                 //btn_rlc.setText("All RLC");
 
-                panel_RLC.setCollapsedHeight(200);
+                panel_all_RLC.setCollapsedHeight(200);
             }
             public void onExpand(View handle, View content) {
                 //Button btn_rlc = (Button)handle;
