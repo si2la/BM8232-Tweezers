@@ -84,7 +84,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private TextView t_cl_10khz, t_r_10khz, t_z_10khz, t_qtg_10khz, t_eqs_10khz;
     private TextView t_cl_95khz, t_r_95khz, t_z_95khz, t_qtg_95khz, t_eqs_95khz;
     private TextView t_cl_160khz, t_r_160khz, t_z_160khz, t_qtg_160khz, t_eqs_160khz;
-    private CheckBox cb_rlc_auto, cb_rlc_95, cb_rlc_1k, cb_rlc_10k, cb_rlc_95k, cb_rlc_160k;
+    private CheckBox /*cb_rlc_auto,*/ cb_rlc_95, cb_rlc_1k, cb_rlc_10k, cb_rlc_95k, cb_rlc_160k;
     private SwitchCompat swRelative;
     private Spinner eqs_spinner, gen_type_spinner;
     private RadioButton rb_o_off, rb_o_6, rb_o_26;
@@ -232,7 +232,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         t_eqs = view.findViewById(R.id.TextEqS);
         t_qtg = view.findViewById(R.id.TextQtg);
 
-        cb_rlc_auto = view.findViewById(R.id.checkBoxAuto);
+        //cb_rlc_auto = view.findViewById(R.id.checkBoxAuto);
         cb_rlc_95 = view.findViewById(R.id.checkBox95Hz);
         cb_rlc_1k = view.findViewById(R.id.checkBox1kHz);
         cb_rlc_10k = view.findViewById(R.id.checkBox10kHz);
@@ -301,7 +301,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     bm8232_mode = BM8232_MODE.RLC_METER;
                     Toast.makeText(getActivity(), "RLC mode started", Toast.LENGTH_SHORT).show();
 
-                    cb_rlc_auto.setEnabled(true);
+                    //cb_rlc_auto.setEnabled(true);
                     cb_rlc_95.setEnabled(true);
                     cb_rlc_1k.setEnabled(true);
                     cb_rlc_10k.setEnabled(true);
@@ -310,8 +310,10 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     gen_type_spinner.setEnabled(false);
 
                     send("rlc\r");
+                    // on start - send 95Hz mode"
+                    send("f95\r");
 
-                    if (cb_rlc_auto.isChecked()) send("fall\r");
+                    //if (cb_rlc_auto.isChecked()) send("fall\r");
                     if (cb_rlc_95.isChecked()) send("f95\r");
                     if (cb_rlc_1k.isChecked()) send("f1k\r");
                     if (cb_rlc_10k.isChecked()) send("f10k\r");
@@ -361,7 +363,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     send("rlc\r");
                     send("fall\r");
                     send("rel\r");
-                    cb_rlc_auto.setEnabled(false);
+                    //cb_rlc_auto.setEnabled(false);
                     cb_rlc_95.setEnabled(false);
                     cb_rlc_1k.setEnabled(false);
                     cb_rlc_10k.setEnabled(false);
@@ -394,7 +396,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     Toast.makeText(getActivity(), "Ufd mode started", Toast.LENGTH_SHORT).show();
 
                     send("ufd\r");
-                    cb_rlc_auto.setEnabled(false);
+                    //cb_rlc_auto.setEnabled(false);
                     cb_rlc_95.setEnabled(false);
                     cb_rlc_1k.setEnabled(false);
                     cb_rlc_10k.setEnabled(false);
@@ -426,7 +428,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     Toast.makeText(getActivity(), "Gen mode started", Toast.LENGTH_SHORT).show();
 
                     send("gen\r");
-                    cb_rlc_auto.setEnabled(false);
+                    //cb_rlc_auto.setEnabled(false);
                     cb_rlc_95.setEnabled(false);
                     cb_rlc_1k.setEnabled(false);
                     cb_rlc_10k.setEnabled(false);
@@ -437,28 +439,28 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             }
         });
 
-        cb_rlc_auto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("fall\r");
-                    cb_rlc_95.setChecked(false);
-                    cb_rlc_1k.setChecked(false);
-                    cb_rlc_10k.setChecked(false);
-                    cb_rlc_95k.setChecked(false);
-                    cb_rlc_160k.setChecked(false);
-                }
-                else {
-                }
-            }
-        });
+//        cb_rlc_auto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if(isChecked) {
+//                    if (bm8232_mode == BM8232_MODE.RLC_METER) send("fall\r");
+//                    cb_rlc_95.setChecked(false);
+//                    cb_rlc_1k.setChecked(false);
+//                    cb_rlc_10k.setChecked(false);
+//                    cb_rlc_95k.setChecked(false);
+//                    cb_rlc_160k.setChecked(false);
+//                }
+//                else {
+//                }
+//            }
+//        });
 
         cb_rlc_95.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     if (bm8232_mode == BM8232_MODE.RLC_METER) send("f95\r");
-                    cb_rlc_auto.setChecked(false);
+                    //cb_rlc_auto.setChecked(false);
                     cb_rlc_1k.setChecked(false);
                     cb_rlc_10k.setChecked(false);
                     cb_rlc_95k.setChecked(false);
@@ -474,7 +476,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     if (bm8232_mode == BM8232_MODE.RLC_METER) send("f1k\r");
-                    cb_rlc_auto.setChecked(false);
+                    //cb_rlc_auto.setChecked(false);
                     cb_rlc_95.setChecked(false);
                     cb_rlc_10k.setChecked(false);
                     cb_rlc_95k.setChecked(false);
@@ -490,7 +492,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     if (bm8232_mode == BM8232_MODE.RLC_METER) send("f10k\r");
-                    cb_rlc_auto.setChecked(false);
+                    //cb_rlc_auto.setChecked(false);
                     cb_rlc_95.setChecked(false);
                     cb_rlc_1k.setChecked(false);
                     cb_rlc_95k.setChecked(false);
@@ -506,7 +508,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     if (bm8232_mode == BM8232_MODE.RLC_METER) send("f95k\r");
-                    cb_rlc_auto.setChecked(false);
+                    //cb_rlc_auto.setChecked(false);
                     cb_rlc_95.setChecked(false);
                     cb_rlc_1k.setChecked(false);
                     cb_rlc_10k.setChecked(false);
@@ -522,7 +524,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
                     if (bm8232_mode == BM8232_MODE.RLC_METER) send("f160k\r");
-                    cb_rlc_auto.setChecked(false);
+                    //cb_rlc_auto.setChecked(false);
                     cb_rlc_95.setChecked(false);
                     cb_rlc_1k.setChecked(false);
                     cb_rlc_10k.setChecked(false);
@@ -591,7 +593,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             }
         });
 
-        String[] wave_type_spinner_values = { "Sinus 30mV", "Sinus 300mV", "Sinus 3V", "PWM 50Hz", "PWM 2kHz", "PWM 50kHz", "Serial", "NoiseAuto"};
+        String[] wave_type_spinner_values = { "Sinus 30mV", "Sinus 300mV", "Sinus 3V", "PWM 50Hz", "PWM 2kHz", "PWM 50kHz", "Serial", "Noise"};
         ArrayAdapter<String> w_adapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_item, wave_type_spinner_values);
         w_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         gen_type_spinner.setAdapter(w_adapter);
@@ -623,7 +625,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 if (choice.equals("Serial") && bm8232_mode == BM8232_MODE.GENERATOR)  {
                     send("uart\r");
                 }
-                if (choice.equals("NoiseAuto") && bm8232_mode == BM8232_MODE.GENERATOR)  {
+                if (choice.equals("Noise") && bm8232_mode == BM8232_MODE.GENERATOR)  {
                     send("noise\r");
                 }
             }

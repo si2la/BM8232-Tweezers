@@ -428,14 +428,14 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
                             <TableRow>
-                                <CheckBox
-                                    android:id="@+id/checkBoxAuto"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Auto"
-                                    android:typeface="monospace"
-                                    android:enabled="false"
-                                    android:checked="true">
+                                <CheckBox>
+<!--                                    android:id="@+id/checkBoxAuto"-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Auto"-->
+<!--                                    android:typeface="monospace"-->
+<!--                                    android:enabled="false"-->
+<!--                                    android:checked="true">-->
                                 </CheckBox>
                                 <CheckBox
                                     android:id="@+id/checkBox95Hz"
@@ -443,7 +443,8 @@
                                     android:layout_height="wrap_content"
                                     android:text="95Hz"
                                     android:typeface="monospace"
-                                    android:enabled="false">
+                                    android:enabled="false"
+                                    android:checked="true">
                                 </CheckBox>
                             </TableRow>
 
@@ -595,7 +596,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="70"
-                    android:text="RLC" />
+                    android:text="RLC FIX FREQ" />
             </LinearLayout>
         </ru.learn2prog.bm8232_tweezers.ExpandablePanel>
 
