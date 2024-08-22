@@ -10,6 +10,7 @@
     <string name="rbutt_f160k">160k</string>
 
     <string name="rlc_table_string_none">--</string>
+    <string name="rlc_table_string_line">-----</string>
 
     <string name="set_relative">Set relative</string>
     <string name="eqs_spinner_text">Eq S</string>

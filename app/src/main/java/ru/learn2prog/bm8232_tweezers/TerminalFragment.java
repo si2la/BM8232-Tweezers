@@ -86,7 +86,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private TextView t_cl_160khz, t_r_160khz, t_z_160khz, t_qtg_160khz, t_eqs_160khz;
     private CheckBox /*cb_rlc_auto,*/ cb_rlc_95, cb_rlc_1k, cb_rlc_10k, cb_rlc_95k, cb_rlc_160k;
     private SwitchCompat swRelative;
-    private Spinner eqs_spinner, gen_type_spinner;
+    private Spinner eqs_spinner, eqs_spinner_all, gen_type_spinner;
     private RadioButton rb_o_off, rb_o_6, rb_o_26;
     private Button butt_gen_plus, butt_gen_minus, ufd_reset_butt;
     // si * finish
@@ -241,6 +241,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         swRelative = view.findViewById(R.id.relative_sw);
         eqs_spinner = view.findViewById(R.id.eqs_spinner);
+        eqs_spinner_all = view.findViewById(R.id.eqs_spinner_all);
         gen_type_spinner = view.findViewById(R.id.gen_type_spinner);
 
         t_cl_95hz = view.findViewById(R.id.TextCL95Hz);
@@ -307,7 +308,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_10k.setEnabled(true);
                     cb_rlc_95k.setEnabled(true);
                     cb_rlc_160k.setEnabled(true);
-                    gen_type_spinner.setEnabled(false);
+                    gen_type_spinner.setEnabled(false); // его видно, наверное... чтобы не нажимали!
 
                     send("rlc\r");
                     // on start - send 95Hz mode"
@@ -370,6 +371,16 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_95k.setEnabled(false);
                     cb_rlc_160k.setEnabled(false);
                     gen_type_spinner.setEnabled(false);
+
+                    if (eqs_spinner_all.getSelectedItem().toString().equals("Auto")) {
+                        send("auto\r");
+                    }
+                    if (eqs_spinner_all.getSelectedItem().toString().equals("Ser")) {
+                        send("ser\r");
+                    }
+                    if (eqs_spinner_all.getSelectedItem().toString().equals("Par")) {
+                        send("par\r");
+                    }
 
                 }
             }
@@ -561,6 +572,29 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     send("par\r");
                 }
                 if (choice.equals("Ser") && bm8232_mode == BM8232_MODE.RLC_METER)  {
+                    send("ser\r");
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+            }
+        });
+
+        eqs_spinner_all.setAdapter(adapter);
+        eqs_spinner_all.setPrompt("Title");
+
+        eqs_spinner_all.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                String choice = eqs_spinner.getSelectedItem().toString();
+                if (choice.equals("Auto") && bm8232_mode == BM8232_MODE.ALL_RLC)  {
+                    send("auto\r");
+                }
+                if (choice.equals("Par") && bm8232_mode == BM8232_MODE.ALL_RLC)  {
+                    send("par\r");
+                }
+                if (choice.equals("Ser") && bm8232_mode == BM8232_MODE.ALL_RLC)  {
                     send("ser\r");
                 }
             }

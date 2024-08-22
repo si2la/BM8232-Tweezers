@@ -677,6 +677,54 @@
                           android:layout_height="match_parent">
 
                           <TextView
+                              android:id="@+id/TextViewLine01"
+                              android:text="@string/rlc_table_string_line"
+                              android:textStyle="bold"
+                              android:typeface="monospace">
+                          </TextView>
+
+                          <TextView
+                              android:id="@+id/TextViewLine02"
+                              android:text="@string/rlc_table_string_line"
+                              android:textStyle="bold"
+                              android:typeface="monospace">
+                          </TextView>
+
+                          <TextView
+                              android:id="@+id/TextViewLine03"
+                              android:text="@string/rlc_table_string_line"
+                              android:textStyle="bold"
+                              android:typeface="monospace">
+                          </TextView>
+
+                          <TextView
+                              android:id="@+id/TextViewLine04"
+                              android:text="@string/rlc_table_string_line"
+                              android:textStyle="bold"
+                              android:typeface="monospace">
+                          </TextView>
+
+                          <TextView
+                              android:id="@+id/TextViewLine05"
+                              android:text="@string/rlc_table_string_line"
+                              android:textStyle="bold"
+                              android:typeface="monospace">
+                          </TextView>
+
+                          <TextView
+                              android:id="@+id/TextViewLine06"
+                              android:text="@string/rlc_table_string_line"
+                              android:textStyle="bold"
+                              android:typeface="monospace">
+                          </TextView>
+
+                      </TableRow>
+
+                      <TableRow
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent">
+
+                          <TextView
                               android:id="@+id/Text95Hz"
                               android:text="95Hz"
                               android:textStyle="bold"
@@ -902,6 +950,34 @@
 
                   </TableLayout>
 
+                  <LinearLayout
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="horizontal">
+
+                      <androidx.appcompat.widget.SwitchCompat
+                          android:id="@+id/relative_sw_all"
+                          android:layout_width="wrap_content"
+                          android:layout_height="30dp"
+                          android:checked="false"
+                          android:layout_marginStart="8dp"
+                          android:text="@string/set_relative"/>
+
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="30dp"
+                          android:text="    Eq.S: "
+                          android:textStyle="bold"
+                          android:typeface="monospace"/>
+
+                      <Spinner
+                          android:id="@+id/eqs_spinner_all"
+                          android:layout_width="wrap_content"
+                          android:layout_height="30dp"
+                          android:text="@string/eqs_spinner_text" />
+
+                  </LinearLayout>
+
               </LinearLayout>
 
               <LinearLayout
@@ -926,7 +1002,7 @@
                       android:layout_height="wrap_content"
                       android:layout_gravity="right"
                       android:layout_weight="70"
-                      android:text="AUTO RLC" />
+                      android:text="RLC ALL FREQ" />
               </LinearLayout>
           </ru.learn2prog.bm8232_tweezers.ExpandablePanel>
 
