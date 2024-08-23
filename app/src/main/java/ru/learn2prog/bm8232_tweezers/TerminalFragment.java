@@ -85,7 +85,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private TextView t_cl_95khz, t_r_95khz, t_z_95khz, t_qtg_95khz, t_eqs_95khz;
     private TextView t_cl_160khz, t_r_160khz, t_z_160khz, t_qtg_160khz, t_eqs_160khz;
     private CheckBox /*cb_rlc_auto,*/ cb_rlc_95, cb_rlc_1k, cb_rlc_10k, cb_rlc_95k, cb_rlc_160k;
-    private SwitchCompat swRelative;
+    private SwitchCompat swRelative, swRelative_all;
     private Spinner eqs_spinner, eqs_spinner_all, gen_type_spinner;
     private RadioButton rb_o_off, rb_o_6, rb_o_26;
     private Button butt_gen_plus, butt_gen_minus, ufd_reset_butt;
@@ -240,6 +240,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         cb_rlc_160k = view.findViewById(R.id.checkBox160kHz);
 
         swRelative = view.findViewById(R.id.relative_sw);
+        swRelative_all = view.findViewById(R.id.relative_sw_all);
         eqs_spinner = view.findViewById(R.id.eqs_spinner);
         eqs_spinner_all = view.findViewById(R.id.eqs_spinner_all);
         gen_type_spinner = view.findViewById(R.id.gen_type_spinner);
@@ -300,7 +301,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 //btn_rlc.setText("<<");
                 if (bm8232_mode != BM8232_MODE.RLC_METER) {
                     bm8232_mode = BM8232_MODE.RLC_METER;
-                    Toast.makeText(getActivity(), "RLC mode started", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "RLC fix mode started", Toast.LENGTH_SHORT).show();
 
                     //cb_rlc_auto.setEnabled(true);
                     cb_rlc_95.setEnabled(true);
@@ -359,7 +360,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 //btn_rlc.setText("<<");
                 if (bm8232_mode != BM8232_MODE.ALL_RLC) {
                     bm8232_mode = BM8232_MODE.ALL_RLC;
-                    Toast.makeText(getActivity(), "Auto RLC mode started", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "RLC all freq mode started", Toast.LENGTH_SHORT).show();
 
                     send("rlc\r");
                     send("fall\r");
@@ -371,6 +372,12 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     cb_rlc_95k.setEnabled(false);
                     cb_rlc_160k.setEnabled(false);
                     gen_type_spinner.setEnabled(false);
+
+                    if ( swRelative_all.isChecked() ) {
+                        send("rel\r");
+                    } else {
+                        send("abs\r");
+                    }
 
                     if (eqs_spinner_all.getSelectedItem().toString().equals("Auto")) {
                         send("auto\r");
@@ -554,6 +561,14 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             }
         });
 
+        swRelative_all.setOnCheckedChangeListener((buttonView, isChecked) ->  {
+            if (isChecked) {
+                send("rel\r");
+            } else {
+                send("abs\r");
+            }
+        });
+
         String[] eqs_spinner_values = { "Auto", "Ser", "Par"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.spinner_item, eqs_spinner_values);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -587,7 +602,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                String choice = eqs_spinner.getSelectedItem().toString();
+                String choice = eqs_spinner_all.getSelectedItem().toString();
                 if (choice.equals("Auto") && bm8232_mode == BM8232_MODE.ALL_RLC)  {
                     send("auto\r");
                 }
@@ -790,14 +805,14 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     }
 
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
-        menu.findItem(R.id.hex).setChecked(hexEnabled);
-        menu.findItem(R.id.controlLines).setChecked(controlLinesEnabled);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            menu.findItem(R.id.backgroundNotification).setChecked(service != null && service.areNotificationsEnabled());
-        } else {
-            menu.findItem(R.id.backgroundNotification).setChecked(true);
-            menu.findItem(R.id.backgroundNotification).setEnabled(false);
-        }
+//        menu.findItem(R.id.hex).setChecked(hexEnabled);
+//        menu.findItem(R.id.controlLines).setChecked(controlLinesEnabled);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            menu.findItem(R.id.backgroundNotification).setChecked(service != null && service.areNotificationsEnabled());
+//        } else {
+//            menu.findItem(R.id.backgroundNotification).setChecked(true);
+//            menu.findItem(R.id.backgroundNotification).setEnabled(false);
+//        }
     }
 
     @Override
@@ -819,11 +834,11 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             builder.create().show();
             return true;
         } else if (id == R.id.hex) {
-            hexEnabled = !hexEnabled;
-            sendText.setText("");
-            hexWatcher.enable(hexEnabled);
-            sendText.setHint(hexEnabled ? "HEX mode" : "");
-            item.setChecked(hexEnabled);
+//            hexEnabled = !hexEnabled;
+//            sendText.setText("");
+//            hexWatcher.enable(hexEnabled);
+//            sendText.setHint(hexEnabled ? "HEX mode" : "");
+//            item.setChecked(hexEnabled);
             return true;
         } else if (id == R.id.controlLines) {
             controlLinesEnabled = !controlLinesEnabled;

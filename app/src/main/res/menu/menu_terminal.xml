@@ -8,25 +8,25 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/newline"
-        android:title="Newline"
+        android:title="Gen"
         app:showAsAction="never" />
     <item
         android:id="@+id/hex"
-        android:title="HEX Mode"
-        android:checkable="true"
+        android:title="Ufd"
         app:showAsAction="never" />
     <item
         android:id="@+id/controlLines"
-        android:title="Control Lines"
-        android:checkable="true"
+        android:title="RLC"
         app:showAsAction="never" />
     <item
         android:id="@+id/backgroundNotification"
         android:title="Notification if App in background"
         android:checkable="true"
+        android:visible="false"
         app:showAsAction="never" />
     <item
         android:id="@+id/sendBreak"
         android:title="Send BREAK"
+        android:visible="false"
         app:showAsAction="never" />
 </menu>
