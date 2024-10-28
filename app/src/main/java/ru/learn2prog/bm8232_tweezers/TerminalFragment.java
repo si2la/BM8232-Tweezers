@@ -38,6 +38,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -89,6 +90,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private Spinner eqs_spinner, eqs_spinner_all, gen_type_spinner;
     private RadioButton rb_o_off, rb_o_6, rb_o_26;
     private Button butt_gen_plus, butt_gen_minus, ufd_reset_butt;
+    private LinearLayout rlGen;
+
     // si * finish
 
     private TextUtil.HexWatcher hexWatcher;
@@ -283,6 +286,8 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         controlLines = new ControlLines(view);
 
         // si ** start
+        rlGen = view.findViewById(R.id.rlPanelGen);
+
         panel_RLC = view.findViewById(R.id.expandablePanelRLC);
 
         panel_RLC.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
@@ -425,37 +430,37 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             }
         });
 
-        panel_Gen = view.findViewById(R.id.expandablePanelGen);
-
-        panel_Gen.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
-            public void onCollapse(View handle, View content) {
-                //Button btn_gen = (Button)handle;
-                //btn_gen.setText("Gen");
-
-                panel_Gen.setCollapsedHeight(180);
-            }
-            public void onExpand(View handle, View content) {
-                //Button btn_gen = (Button)handle;
-                panel_Gen.setCollapsedHeight(80);
-                panel_RLC.hardCollapse();
-                panel_all_RLC.hardCollapse();
-                panel_Ufd.hardCollapse();
-                //btn_gen.setText("<<");
-                if (bm8232_mode != BM8232_MODE.GENERATOR) {
-                    bm8232_mode = BM8232_MODE.GENERATOR;
-                    Toast.makeText(getActivity(), "Gen mode started", Toast.LENGTH_SHORT).show();
-
-                    send("gen\r");
-                    //cb_rlc_auto.setEnabled(false);
-                    cb_rlc_95.setEnabled(false);
-                    cb_rlc_1k.setEnabled(false);
-                    cb_rlc_10k.setEnabled(false);
-                    cb_rlc_95k.setEnabled(false);
-                    cb_rlc_160k.setEnabled(false);
-                    gen_type_spinner.setEnabled(true);
-                }
-            }
-        });
+//        panel_Gen = view.findViewById(R.id.expandablePanelGen);
+//
+//        panel_Gen.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
+//            public void onCollapse(View handle, View content) {
+//                //Button btn_gen = (Button)handle;
+//                //btn_gen.setText("Gen");
+//
+//                panel_Gen.setCollapsedHeight(180);
+//            }
+//            public void onExpand(View handle, View content) {
+//                //Button btn_gen = (Button)handle;
+//                panel_Gen.setCollapsedHeight(80);
+//                panel_RLC.hardCollapse();
+//                panel_all_RLC.hardCollapse();
+//                panel_Ufd.hardCollapse();
+//                //btn_gen.setText("<<");
+//                if (bm8232_mode != BM8232_MODE.GENERATOR) {
+//                    bm8232_mode = BM8232_MODE.GENERATOR;
+//                    Toast.makeText(getActivity(), "Gen mode started", Toast.LENGTH_SHORT).show();
+//
+//                    send("gen\r");
+//                    //cb_rlc_auto.setEnabled(false);
+//                    cb_rlc_95.setEnabled(false);
+//                    cb_rlc_1k.setEnabled(false);
+//                    cb_rlc_10k.setEnabled(false);
+//                    cb_rlc_95k.setEnabled(false);
+//                    cb_rlc_160k.setEnabled(false);
+//                    gen_type_spinner.setEnabled(true);
+//                }
+//            }
+//        });
 
 //        cb_rlc_auto.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -822,16 +827,11 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             receiveText.setText("");
             return true;
         } else if (id == R.id.newline) {
-            String[] newlineNames = getResources().getStringArray(R.array.newline_names);
-            String[] newlineValues = getResources().getStringArray(R.array.newline_values);
-            int pos = java.util.Arrays.asList(newlineValues).indexOf(newline);
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Newline");
-            builder.setSingleChoiceItems(newlineNames, pos, (dialog, item1) -> {
-                newline = newlineValues[item1];
-                dialog.dismiss();
-            });
-            builder.create().show();
+
+            // пробуем спрятать Layout
+            rlGen.setVisibility(View.GONE);
+
+
             return true;
         } else if (id == R.id.hex) {
 //            hexEnabled = !hexEnabled;
@@ -839,6 +839,10 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 //            hexWatcher.enable(hexEnabled);
 //            sendText.setHint(hexEnabled ? "HEX mode" : "");
 //            item.setChecked(hexEnabled);
+
+            // пробуем показать Layout
+            rlGen.setVisibility(View.VISIBLE);
+
             return true;
         } else if (id == R.id.controlLines) {
             controlLinesEnabled = !controlLinesEnabled;

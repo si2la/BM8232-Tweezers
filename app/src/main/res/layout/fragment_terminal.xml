@@ -95,17 +95,21 @@
         android:layout_height="wrap_content">
 
 
-        <ru.learn2prog.bm8232_tweezers.ExpandablePanel
-            android:id="@+id/expandablePanelGen"
-            android:layout_width="fill_parent"
-            android:layout_height="170dp"
-            android:orientation="vertical"
-            example:collapsedHeight="26dp"
-            example:content="@+id/valueGen"
-            example:handle="@+id/expandGen"
-            example:isviewgroup="true"
-            example:viewgroup="@+id/expandLGen" >
-
+<!--        <ru.learn2prog.bm8232_tweezers.ExpandablePanel-->
+<!--            android:id="@+id/expandablePanelGen"-->
+<!--            android:layout_width="fill_parent"-->
+<!--            android:layout_height="170dp"-->
+<!--            android:orientation="vertical"-->
+<!--            example:collapsedHeight="26dp"-->
+<!--            example:content="@+id/valueGen"-->
+<!--            example:handle="@+id/expandGen"-->
+<!--            example:isviewgroup="true"-->
+<!--            example:viewgroup="@+id/expandLGen" >-->
+          <LinearLayout
+          android:id="@+id/rlPanelGen"
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent">
             <LinearLayout
                 android:id="@+id/valueGen"
                 android:layout_width="fill_parent"
@@ -210,7 +214,8 @@
                     android:layout_weight="70"
                     android:text="Gen" />
             </LinearLayout>
-        </ru.learn2prog.bm8232_tweezers.ExpandablePanel>
+          </LinearLayout>
+<!--        </ru.learn2prog.bm8232_tweezers.ExpandablePanel>-->
 
         <ru.learn2prog.bm8232_tweezers.ExpandablePanel
             android:id="@+id/expandablePanelUfd"
