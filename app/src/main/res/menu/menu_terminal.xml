@@ -5,18 +5,23 @@
         android:id="@+id/clear"
         android:icon="@drawable/ic_delete_white_24dp"
         android:title="Clear"
+        android:visible="false"
         app:showAsAction="always" />
     <item
-        android:id="@+id/newline"
+        android:id="@+id/gen_m"
         android:title="Gen"
         app:showAsAction="never" />
     <item
-        android:id="@+id/hex"
+        android:id="@+id/ufd_m"
         android:title="Ufd"
         app:showAsAction="never" />
     <item
-        android:id="@+id/controlLines"
+        android:id="@+id/rlc_m"
         android:title="RLC"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/all_rlc_m"
+        android:title="All RLC"
         app:showAsAction="never" />
     <item
         android:id="@+id/backgroundNotification"

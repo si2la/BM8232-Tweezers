@@ -3,7 +3,6 @@ package ru.learn2prog.bm8232_tweezers;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -38,7 +37,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,7 +88,10 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     private Spinner eqs_spinner, eqs_spinner_all, gen_type_spinner;
     private RadioButton rb_o_off, rb_o_6, rb_o_26;
     private Button butt_gen_plus, butt_gen_minus, ufd_reset_butt;
-    private LinearLayout rlGen;
+    private LinearLayout lGen;
+    private LinearLayout lUfd;
+    private LinearLayout lRLC;
+    private LinearLayout lAllRLC;
 
     // si * finish
 
@@ -286,149 +287,157 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         controlLines = new ControlLines(view);
 
         // si ** start
-        rlGen = view.findViewById(R.id.rlPanelGen);
+        lGen = view.findViewById(R.id.lPanelGen);
+        lUfd = view.findViewById(R.id.lPanelUfd);
+        lRLC = view.findViewById(R.id.lPanelRLC);
+        lAllRLC = view.findViewById(R.id.lPanelAllRLC);
 
-        panel_RLC = view.findViewById(R.id.expandablePanelRLC);
+        lUfd.setVisibility(View.GONE);
+        lGen.setVisibility(View.GONE);
+        lRLC.setVisibility(View.GONE);
+        lAllRLC.setVisibility(View.GONE);
 
-        panel_RLC.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
-            public void onCollapse(View handle, View content) {
-                //Button btn_rlc = (Button)handle;
-                //btn_rlc.setText("RLC");
+//        panel_RLC = view.findViewById(R.id.expandablePanelRLC);
+//
+//        panel_RLC.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
+//            public void onCollapse(View handle, View content) {
+//                //Button btn_rlc = (Button)handle;
+//                //btn_rlc.setText("RLC");
+//
+//                panel_RLC.setCollapsedHeight(310);
+//            }
+//            public void onExpand(View handle, View content) {
+//                //Button btn_rlc = (Button)handle;
+//                panel_RLC.setCollapsedHeight(60);
+//                panel_all_RLC.hardCollapse();
+//                panel_Gen.hardCollapse();
+//                panel_Ufd.hardCollapse();
+//                //btn_rlc.setText("<<");
+//                if (bm8232_mode != BM8232_MODE.RLC_METER) {
+//                    bm8232_mode = BM8232_MODE.RLC_METER;
+//                    Toast.makeText(getActivity(), "RLC fix mode started", Toast.LENGTH_SHORT).show();
+//
+//                    //cb_rlc_auto.setEnabled(true);
+//                    cb_rlc_95.setEnabled(true);
+//                    cb_rlc_1k.setEnabled(true);
+//                    cb_rlc_10k.setEnabled(true);
+//                    cb_rlc_95k.setEnabled(true);
+//                    cb_rlc_160k.setEnabled(true);
+//                    gen_type_spinner.setEnabled(false); // его видно, наверное... чтобы не нажимали!
+//
+//                    send("rlc\r");
+//                    // on start - send 95Hz mode"
+//                    send("f95\r");
+//
+//                    //if (cb_rlc_auto.isChecked()) send("fall\r");
+//                    if (cb_rlc_95.isChecked()) send("f95\r");
+//                    if (cb_rlc_1k.isChecked()) send("f1k\r");
+//                    if (cb_rlc_10k.isChecked()) send("f10k\r");
+//                    if (cb_rlc_95k.isChecked()) send("f95k\r");
+//                    if (cb_rlc_160k.isChecked()) send("f160k\r");
+//
+//                    if ( swRelative.isChecked() ) {
+//                        send("rel\r");
+//                    } else {
+//                        send("abs\r");
+//                    }
+//
+//                    if (eqs_spinner.getSelectedItem().toString().equals("Auto")) {
+//                        send("auto\r");
+//                    }
+//                    if (eqs_spinner.getSelectedItem().toString().equals("Ser")) {
+//                        send("ser\r");
+//                    }
+//                    if (eqs_spinner.getSelectedItem().toString().equals("Par")) {
+//                        send("par\r");
+//                    }
+//
+//                }
+//            }
+//        });
 
-                panel_RLC.setCollapsedHeight(310);
-            }
-            public void onExpand(View handle, View content) {
-                //Button btn_rlc = (Button)handle;
-                panel_RLC.setCollapsedHeight(60);
-                panel_all_RLC.hardCollapse();
-                panel_Gen.hardCollapse();
-                panel_Ufd.hardCollapse();
-                //btn_rlc.setText("<<");
-                if (bm8232_mode != BM8232_MODE.RLC_METER) {
-                    bm8232_mode = BM8232_MODE.RLC_METER;
-                    Toast.makeText(getActivity(), "RLC fix mode started", Toast.LENGTH_SHORT).show();
+//        panel_all_RLC = view.findViewById(R.id.expandablePanelAllRLC);
+//
+//        panel_all_RLC.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
+//            public void onCollapse(View handle, View content) {
+//                //Button btn_rlc = (Button)handle;
+//                //btn_rlc.setText("All RLC");
+//
+//                panel_all_RLC.setCollapsedHeight(200);
+//            }
+//            public void onExpand(View handle, View content) {
+//                //Button btn_rlc = (Button)handle;
+//                panel_all_RLC.setCollapsedHeight(60);
+//                panel_RLC.hardCollapse();
+//                panel_Gen.hardCollapse();
+//                panel_Ufd.hardCollapse();
+//                //btn_rlc.setText("<<");
+//                if (bm8232_mode != BM8232_MODE.ALL_RLC) {
+//                    bm8232_mode = BM8232_MODE.ALL_RLC;
+//                    Toast.makeText(getActivity(), "RLC all freq mode started", Toast.LENGTH_SHORT).show();
+//
+//                    send("rlc\r");
+//                    send("fall\r");
+//                    send("rel\r");
+//                    //cb_rlc_auto.setEnabled(false);
+//                    cb_rlc_95.setEnabled(false);
+//                    cb_rlc_1k.setEnabled(false);
+//                    cb_rlc_10k.setEnabled(false);
+//                    cb_rlc_95k.setEnabled(false);
+//                    cb_rlc_160k.setEnabled(false);
+//                    gen_type_spinner.setEnabled(false);
+//
+//                    if ( swRelative_all.isChecked() ) {
+//                        send("rel\r");
+//                    } else {
+//                        send("abs\r");
+//                    }
+//
+//                    if (eqs_spinner_all.getSelectedItem().toString().equals("Auto")) {
+//                        send("auto\r");
+//                    }
+//                    if (eqs_spinner_all.getSelectedItem().toString().equals("Ser")) {
+//                        send("ser\r");
+//                    }
+//                    if (eqs_spinner_all.getSelectedItem().toString().equals("Par")) {
+//                        send("par\r");
+//                    }
+//
+//                }
+//            }
+//        });
 
-                    //cb_rlc_auto.setEnabled(true);
-                    cb_rlc_95.setEnabled(true);
-                    cb_rlc_1k.setEnabled(true);
-                    cb_rlc_10k.setEnabled(true);
-                    cb_rlc_95k.setEnabled(true);
-                    cb_rlc_160k.setEnabled(true);
-                    gen_type_spinner.setEnabled(false); // его видно, наверное... чтобы не нажимали!
-
-                    send("rlc\r");
-                    // on start - send 95Hz mode"
-                    send("f95\r");
-
-                    //if (cb_rlc_auto.isChecked()) send("fall\r");
-                    if (cb_rlc_95.isChecked()) send("f95\r");
-                    if (cb_rlc_1k.isChecked()) send("f1k\r");
-                    if (cb_rlc_10k.isChecked()) send("f10k\r");
-                    if (cb_rlc_95k.isChecked()) send("f95k\r");
-                    if (cb_rlc_160k.isChecked()) send("f160k\r");
-
-                    if ( swRelative.isChecked() ) {
-                        send("rel\r");
-                    } else {
-                        send("abs\r");
-                    }
-
-                    if (eqs_spinner.getSelectedItem().toString().equals("Auto")) {
-                        send("auto\r");
-                    }
-                    if (eqs_spinner.getSelectedItem().toString().equals("Ser")) {
-                        send("ser\r");
-                    }
-                    if (eqs_spinner.getSelectedItem().toString().equals("Par")) {
-                        send("par\r");
-                    }
-
-                }
-            }
-        });
-
-        panel_all_RLC = view.findViewById(R.id.expandablePanelAllRLC);
-
-        panel_all_RLC.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
-            public void onCollapse(View handle, View content) {
-                //Button btn_rlc = (Button)handle;
-                //btn_rlc.setText("All RLC");
-
-                panel_all_RLC.setCollapsedHeight(200);
-            }
-            public void onExpand(View handle, View content) {
-                //Button btn_rlc = (Button)handle;
-                panel_all_RLC.setCollapsedHeight(60);
-                panel_RLC.hardCollapse();
-                panel_Gen.hardCollapse();
-                panel_Ufd.hardCollapse();
-                //btn_rlc.setText("<<");
-                if (bm8232_mode != BM8232_MODE.ALL_RLC) {
-                    bm8232_mode = BM8232_MODE.ALL_RLC;
-                    Toast.makeText(getActivity(), "RLC all freq mode started", Toast.LENGTH_SHORT).show();
-
-                    send("rlc\r");
-                    send("fall\r");
-                    send("rel\r");
-                    //cb_rlc_auto.setEnabled(false);
-                    cb_rlc_95.setEnabled(false);
-                    cb_rlc_1k.setEnabled(false);
-                    cb_rlc_10k.setEnabled(false);
-                    cb_rlc_95k.setEnabled(false);
-                    cb_rlc_160k.setEnabled(false);
-                    gen_type_spinner.setEnabled(false);
-
-                    if ( swRelative_all.isChecked() ) {
-                        send("rel\r");
-                    } else {
-                        send("abs\r");
-                    }
-
-                    if (eqs_spinner_all.getSelectedItem().toString().equals("Auto")) {
-                        send("auto\r");
-                    }
-                    if (eqs_spinner_all.getSelectedItem().toString().equals("Ser")) {
-                        send("ser\r");
-                    }
-                    if (eqs_spinner_all.getSelectedItem().toString().equals("Par")) {
-                        send("par\r");
-                    }
-
-                }
-            }
-        });
-
-        panel_Ufd = view.findViewById(R.id.expandablePanelUfd);
-
-        panel_Ufd.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
-            public void onCollapse(View handle, View content) {
-                //Button btn = (Button)handle;
-                //btn.setText("Ufd");
-
-                panel_Ufd.setCollapsedHeight(180);
-            }
-            public void onExpand(View handle, View content) {
-                //Button btn = (Button)handle;
-                panel_Ufd.setCollapsedHeight(60);
-                panel_RLC.hardCollapse();
-                panel_all_RLC.hardCollapse();
-                panel_Gen.hardCollapse();
-                //btn.setText("<<");
-                if (bm8232_mode != BM8232_MODE.U_F_DIODE) {
-                    bm8232_mode = BM8232_MODE.U_F_DIODE;
-                    Toast.makeText(getActivity(), "Ufd mode started", Toast.LENGTH_SHORT).show();
-
-                    send("ufd\r");
-                    //cb_rlc_auto.setEnabled(false);
-                    cb_rlc_95.setEnabled(false);
-                    cb_rlc_1k.setEnabled(false);
-                    cb_rlc_10k.setEnabled(false);
-                    cb_rlc_95k.setEnabled(false);
-                    cb_rlc_160k.setEnabled(false);
-                    gen_type_spinner.setEnabled(false);
-                }
-            }
-        });
+//        panel_Ufd = view.findViewById(R.id.expandablePanelUfd);
+//
+//        panel_Ufd.setOnExpandListener(new ExpandablePanel.OnExpandListener() {
+//            public void onCollapse(View handle, View content) {
+//                //Button btn = (Button)handle;
+//                //btn.setText("Ufd");
+//
+//                panel_Ufd.setCollapsedHeight(180);
+//            }
+//            public void onExpand(View handle, View content) {
+//                //Button btn = (Button)handle;
+//                panel_Ufd.setCollapsedHeight(60);
+//                panel_RLC.hardCollapse();
+//                panel_all_RLC.hardCollapse();
+//                panel_Gen.hardCollapse();
+//                //btn.setText("<<");
+//                if (bm8232_mode != BM8232_MODE.U_F_DIODE) {
+//                    bm8232_mode = BM8232_MODE.U_F_DIODE;
+//                    Toast.makeText(getActivity(), "Ufd mode started", Toast.LENGTH_SHORT).show();
+//
+//                    send("ufd\r");
+//                    //cb_rlc_auto.setEnabled(false);
+//                    cb_rlc_95.setEnabled(false);
+//                    cb_rlc_1k.setEnabled(false);
+//                    cb_rlc_10k.setEnabled(false);
+//                    cb_rlc_95k.setEnabled(false);
+//                    cb_rlc_160k.setEnabled(false);
+//                    gen_type_spinner.setEnabled(false);
+//                }
+//            }
+//        });
 
 //        panel_Gen = view.findViewById(R.id.expandablePanelGen);
 //
@@ -826,25 +835,38 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         if (id == R.id.clear) {
             receiveText.setText("");
             return true;
-        } else if (id == R.id.newline) {
+        } else if (id == R.id.gen_m) {
 
-            // пробуем спрятать Layout
-            rlGen.setVisibility(View.GONE);
+            if (bm8232_mode != BM8232_MODE.GENERATOR) {
+                bm8232_mode = BM8232_MODE.GENERATOR;
+                Toast.makeText(getActivity(), "Gen mode started", Toast.LENGTH_SHORT).show();
 
-
-            return true;
-        } else if (id == R.id.hex) {
-//            hexEnabled = !hexEnabled;
-//            sendText.setText("");
-//            hexWatcher.enable(hexEnabled);
-//            sendText.setHint(hexEnabled ? "HEX mode" : "");
-//            item.setChecked(hexEnabled);
-
-            // пробуем показать Layout
-            rlGen.setVisibility(View.VISIBLE);
+                send("gen\r");
+                // показать Layout
+                lGen.setVisibility(View.VISIBLE);
+                // скрыть остальные
+                lUfd.setVisibility(View.GONE);
+                lRLC.setVisibility(View.GONE);
+                lAllRLC.setVisibility(View.GONE);
+            }
 
             return true;
-        } else if (id == R.id.controlLines) {
+        } else if (id == R.id.ufd_m) {
+            if (bm8232_mode != BM8232_MODE.U_F_DIODE) {
+                bm8232_mode = BM8232_MODE.U_F_DIODE;
+                Toast.makeText(getActivity(), "Ufd mode started", Toast.LENGTH_SHORT).show();
+
+                send("ufd\r");
+                // показать Layout
+                lUfd.setVisibility(View.VISIBLE);
+                // скрыть остальные
+                lGen.setVisibility(View.GONE);
+                lRLC.setVisibility(View.GONE);
+                lAllRLC.setVisibility(View.GONE);
+            }
+
+            return true;
+        } else if (id == R.id.rlc_m) {
             controlLinesEnabled = !controlLinesEnabled;
             item.setChecked(controlLinesEnabled);
             if (controlLinesEnabled) {
@@ -1225,7 +1247,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             mainLooper = new Handler(Looper.getMainLooper());
             runnable = this::run; // w/o explicit Runnable, a new lambda would be created on each postDelayed, which would not be found again by removeCallbacks
 
-            frame = view.findViewById(R.id.controlLines);
+            frame = view.findViewById(R.id.rlc_m);
             rtsBtn = view.findViewById(R.id.controlLineRts);
             ctsBtn = view.findViewById(R.id.controlLineCts);
             dtrBtn = view.findViewById(R.id.controlLineDtr);

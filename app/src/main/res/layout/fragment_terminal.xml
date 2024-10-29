@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/controlLines"
+        android:id="@+id/rlc_m"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -91,7 +91,7 @@
 
       <LinearLayout
         android:layout_width="match_parent"
-          android:orientation="vertical"
+        android:orientation="vertical"
         android:layout_height="wrap_content">
 
 
@@ -106,10 +106,11 @@
 <!--            example:isviewgroup="true"-->
 <!--            example:viewgroup="@+id/expandLGen" >-->
           <LinearLayout
-          android:id="@+id/rlPanelGen"
+          android:id="@+id/lPanelGen"
           android:orientation="vertical"
           android:layout_width="match_parent"
           android:layout_height="match_parent">
+
             <LinearLayout
                 android:id="@+id/valueGen"
                 android:layout_width="fill_parent"
@@ -189,7 +190,6 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:id="@+id/expandLGen"
                 android:layout_width="fill_parent"
@@ -214,19 +214,25 @@
                     android:layout_weight="70"
                     android:text="Gen" />
             </LinearLayout>
+
           </LinearLayout>
 <!--        </ru.learn2prog.bm8232_tweezers.ExpandablePanel>-->
 
-        <ru.learn2prog.bm8232_tweezers.ExpandablePanel
-            android:id="@+id/expandablePanelUfd"
-            android:layout_width="fill_parent"
-            android:layout_height="200dp"
+<!--        <ru.learn2prog.bm8232_tweezers.ExpandablePanel-->
+<!--            android:id="@+id/expandablePanelUfd"-->
+<!--            android:layout_width="fill_parent"-->
+<!--            android:layout_height="200dp"-->
+<!--            android:orientation="vertical"-->
+<!--            example:collapsedHeight="26dp"-->
+<!--            example:content="@+id/value"-->
+<!--            example:handle="@+id/expand"-->
+<!--            example:isviewgroup="true"-->
+<!--            example:viewgroup="@+id/expandL" >-->
+        <LinearLayout
+            android:id="@+id/lPanelUfd"
             android:orientation="vertical"
-            example:collapsedHeight="26dp"
-            example:content="@+id/value"
-            example:handle="@+id/expand"
-            example:isviewgroup="true"
-            example:viewgroup="@+id/expandL" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/value"
@@ -394,18 +400,25 @@
                     android:layout_weight="70"
                     android:text="Ufd" />
             </LinearLayout>
-        </ru.learn2prog.bm8232_tweezers.ExpandablePanel>
 
-        <ru.learn2prog.bm8232_tweezers.ExpandablePanel
-            android:id="@+id/expandablePanelRLC"
-            android:layout_width="fill_parent"
-            android:layout_height="320dp"
+        </LinearLayout>
+<!--        </ru.learn2prog.bm8232_tweezers.ExpandablePanel>-->
+
+<!--        <ru.learn2prog.bm8232_tweezers.ExpandablePanel-->
+<!--            android:id="@+id/expandablePanelRLC"-->
+<!--            android:layout_width="fill_parent"-->
+<!--            android:layout_height="320dp"-->
+<!--            android:orientation="vertical"-->
+<!--            example:collapsedHeight="30dp"-->
+<!--            example:content="@+id/valueRLC"-->
+<!--            example:handle="@+id/expandRLCButton"-->
+<!--            example:isviewgroup="true"-->
+<!--            example:viewgroup="@+id/expandLRLC" >-->
+        <LinearLayout
+            android:id="@+id/lPanelRLC"
             android:orientation="vertical"
-            example:collapsedHeight="30dp"
-            example:content="@+id/valueRLC"
-            example:handle="@+id/expandRLCButton"
-            example:isviewgroup="true"
-            example:viewgroup="@+id/expandLRLC" >
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:id="@+id/valueRLC"
@@ -599,18 +612,25 @@
                     android:layout_weight="70"
                     android:text="RLC FIX FREQ" />
             </LinearLayout>
-        </ru.learn2prog.bm8232_tweezers.ExpandablePanel>
 
-          <ru.learn2prog.bm8232_tweezers.ExpandablePanel
-              android:id="@+id/expandablePanelAllRLC"
-              android:layout_width="fill_parent"
-              android:layout_height="280dp"
+        </LinearLayout>
+<!--        </ru.learn2prog.bm8232_tweezers.ExpandablePanel>-->
+
+<!--          <ru.learn2prog.bm8232_tweezers.ExpandablePanel-->
+<!--              android:id="@+id/expandablePanelAllRLC"-->
+<!--              android:layout_width="fill_parent"-->
+<!--              android:layout_height="280dp"-->
+<!--              android:orientation="vertical"-->
+<!--              example:collapsedHeight="28dp"-->
+<!--              example:content="@+id/valueAllRLC"-->
+<!--              example:handle="@+id/expandAllRLCButton"-->
+<!--              example:isviewgroup="true"-->
+<!--              example:viewgroup="@+id/expandAllRLC" >-->
+          <LinearLayout
+              android:id="@+id/lPanelAllRLC"
               android:orientation="vertical"
-              example:collapsedHeight="28dp"
-              example:content="@+id/valueAllRLC"
-              example:handle="@+id/expandAllRLCButton"
-              example:isviewgroup="true"
-              example:viewgroup="@+id/expandAllRLC" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
               <LinearLayout
                   android:id="@+id/valueAllRLC"
@@ -1009,7 +1029,9 @@
                       android:layout_weight="70"
                       android:text="RLC ALL FREQ" />
               </LinearLayout>
-          </ru.learn2prog.bm8232_tweezers.ExpandablePanel>
+
+          </LinearLayout>
+<!--          </ru.learn2prog.bm8232_tweezers.ExpandablePanel>-->
 
       </LinearLayout>
 
