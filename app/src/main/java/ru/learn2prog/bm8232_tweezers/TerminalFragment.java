@@ -63,7 +63,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
     private enum Connected { False, Pending, True }
     private enum BM8232_MODE { NONE, ALL_RLC, RLC_METER, U_F_DIODE, GENERATOR}
-    private  BM8232_MODE bm8232_mode;
+    private  BM8232_MODE bm8232_mode = BM8232_MODE.NONE;
     private final BroadcastReceiver broadcastReceiver;
     private int deviceId, portNum, baudRate;
     private UsbSerialPort usbSerialPort;
@@ -127,8 +127,9 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         deviceId = getArguments().getInt("device");
         portNum = getArguments().getInt("port");
         baudRate = getArguments().getInt("baud");
+        // TODO delete!
         //bm8232_mode = BM8232_MODE.NONE;
-        bm8232_mode = BM8232_MODE.ALL_RLC;
+        //bm8232_mode = BM8232_MODE.ALL_RLC;
     }
 
     @Override
@@ -819,6 +820,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     }
 
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        //TODO - ???
 //        menu.findItem(R.id.hex).setChecked(hexEnabled);
 //        menu.findItem(R.id.controlLines).setChecked(controlLinesEnabled);
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -867,6 +869,93 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
             return true;
         } else if (id == R.id.rlc_m) {
+            if (bm8232_mode != BM8232_MODE.RLC_METER) {
+                bm8232_mode = BM8232_MODE.RLC_METER;
+                Toast.makeText(getActivity(), "RLC fix mode started", Toast.LENGTH_SHORT).show();
+
+                //cb_rlc_auto.setEnabled(true);
+//                cb_rlc_95.setEnabled(true);
+//                cb_rlc_1k.setEnabled(true);
+//                cb_rlc_10k.setEnabled(true);
+//                cb_rlc_95k.setEnabled(true);
+//                cb_rlc_160k.setEnabled(true);
+
+                send("rlc\r");
+                // on start - send 95Hz mode"
+                send("f95\r");
+
+                //if (cb_rlc_auto.isChecked()) send("fall\r");
+                if (cb_rlc_95.isChecked()) send("f95\r");
+                if (cb_rlc_1k.isChecked()) send("f1k\r");
+                if (cb_rlc_10k.isChecked()) send("f10k\r");
+                if (cb_rlc_95k.isChecked()) send("f95k\r");
+                if (cb_rlc_160k.isChecked()) send("f160k\r");
+
+                if (swRelative.isChecked()) {
+                    send("rel\r");
+                } else {
+                    send("abs\r");
+                }
+
+                if (eqs_spinner.getSelectedItem().toString().equals("Auto")) {
+                    send("auto\r");
+                }
+                if (eqs_spinner.getSelectedItem().toString().equals("Ser")) {
+                    send("ser\r");
+                }
+                if (eqs_spinner.getSelectedItem().toString().equals("Par")) {
+                    send("par\r");
+                }
+                // показать Layout
+                lRLC.setVisibility(View.VISIBLE);
+                // скрыть остальные
+                lGen.setVisibility(View.GONE);
+                lUfd.setVisibility(View.GONE);
+                lAllRLC.setVisibility(View.GONE);
+            }
+
+            return true;
+        } else if (id == R.id.all_rlc_m) {
+            if (bm8232_mode != BM8232_MODE.ALL_RLC) {
+                bm8232_mode = BM8232_MODE.ALL_RLC;
+                Toast.makeText(getActivity(), "RLC all freq mode started", Toast.LENGTH_SHORT).show();
+
+                send("rlc\r");
+                send("fall\r");
+                send("rel\r");
+                //cb_rlc_auto.setEnabled(false);
+//                    cb_rlc_95.setEnabled(false);
+//                    cb_rlc_1k.setEnabled(false);
+//                    cb_rlc_10k.setEnabled(false);
+//                    cb_rlc_95k.setEnabled(false);
+//                    cb_rlc_160k.setEnabled(false);
+//                    gen_type_spinner.setEnabled(false);
+
+                if (swRelative_all.isChecked()) {
+                    send("rel\r");
+                } else {
+                    send("abs\r");
+                }
+
+                if (eqs_spinner_all.getSelectedItem().toString().equals("Auto")) {
+                    send("auto\r");
+                }
+                if (eqs_spinner_all.getSelectedItem().toString().equals("Ser")) {
+                    send("ser\r");
+                }
+                if (eqs_spinner_all.getSelectedItem().toString().equals("Par")) {
+                    send("par\r");
+                }
+            }
+            // показать Layout
+            lAllRLC.setVisibility(View.VISIBLE);
+            // скрыть остальные
+            lGen.setVisibility(View.GONE);
+            lUfd.setVisibility(View.GONE);
+            lRLC.setVisibility(View.GONE);
+
+            return true;
+        } else if (id == R.id.controlLines) {
             controlLinesEnabled = !controlLinesEnabled;
             item.setChecked(controlLinesEnabled);
             if (controlLinesEnabled) {
@@ -1247,7 +1336,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
             mainLooper = new Handler(Looper.getMainLooper());
             runnable = this::run; // w/o explicit Runnable, a new lambda would be created on each postDelayed, which would not be found again by removeCallbacks
 
-            frame = view.findViewById(R.id.rlc_m);
+            frame = view.findViewById(R.id.controlLines);
             rtsBtn = view.findViewById(R.id.controlLineRts);
             ctsBtn = view.findViewById(R.id.controlLineCts);
             dtrBtn = view.findViewById(R.id.controlLineDtr);
