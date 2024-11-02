@@ -686,9 +686,9 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 Toast.makeText(getActivity(), "Gen mode started", Toast.LENGTH_SHORT).show();
 
                 send("gen\r");
-                // показать Layout
+                // show Layout
                 lGen.setVisibility(View.VISIBLE);
-                // скрыть остальные
+                // hide
                 lUfd.setVisibility(View.GONE);
                 lRLC.setVisibility(View.GONE);
                 lAllRLC.setVisibility(View.GONE);
@@ -701,9 +701,9 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 Toast.makeText(getActivity(), "Ufd mode started", Toast.LENGTH_SHORT).show();
 
                 send("ufd\r");
-                // показать Layout
+                // show Layout
                 lUfd.setVisibility(View.VISIBLE);
-                // скрыть остальные
+                // hide
                 lGen.setVisibility(View.GONE);
                 lRLC.setVisibility(View.GONE);
                 lAllRLC.setVisibility(View.GONE);
@@ -749,9 +749,9 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 if (eqs_spinner.getSelectedItem().toString().equals("Par")) {
                     send("par\r");
                 }
-                // показать Layout
+                // show Layout
                 lRLC.setVisibility(View.VISIBLE);
-                // скрыть остальные
+                // hide
                 lGen.setVisibility(View.GONE);
                 lUfd.setVisibility(View.GONE);
                 lAllRLC.setVisibility(View.GONE);
@@ -790,9 +790,9 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                     send("par\r");
                 }
             }
-            // показать Layout
+            // show Layout
             lAllRLC.setVisibility(View.VISIBLE);
-            // скрыть остальные
+            // hide
             lGen.setVisibility(View.GONE);
             lUfd.setVisibility(View.GONE);
             lRLC.setVisibility(View.GONE);

@@ -854,6 +854,7 @@
         android:freezesText="true"
         android:gravity="bottom"
         android:scrollbars="vertical"
+        android:visibility="gone"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
     <View
