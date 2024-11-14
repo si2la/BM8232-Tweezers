@@ -24,6 +24,14 @@
         android:title="All RLC"
         app:showAsAction="never" />
     <item
+        android:id="@+id/inc_size"
+        android:title="font +"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/small_size"
+        android:title="font -"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/controlLines"
         android:title="Control Lines"
         android:visible="false"

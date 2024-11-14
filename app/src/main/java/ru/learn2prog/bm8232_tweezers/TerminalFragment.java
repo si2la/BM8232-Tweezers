@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
 import android.hardware.usb.UsbManager;
@@ -826,7 +828,24 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 status("send BREAK failed: " + e.getMessage());
             }
             return true;
-        } else {
+        } else if (id == R.id.inc_size ) {
+            Resources res = getResources();
+            float  fontScale = 1.2f;
+            Configuration configuration = new Configuration(res.getConfiguration());
+            configuration.fontScale = fontScale;
+            res.updateConfiguration(configuration, res.getDisplayMetrics());
+
+            return true;
+        } else if (id == R.id.small_size ) {
+            Resources res = getResources();
+            float  fontScale = 0.8f;
+            Configuration configuration = new Configuration(res.getConfiguration());
+            configuration.fontScale = fontScale;
+            res.updateConfiguration(configuration, res.getDisplayMetrics());
+
+            return true;
+        }
+        else{
             return super.onOptionsItemSelected(item);
         }
     }
