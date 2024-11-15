@@ -3,6 +3,12 @@
     <item
         android:id="@+id/refresh"
         android:title="Refresh Devices" />
+    <item
+        android:id="@+id/inc_font_size"
+        android:title="font+" />
+    <item
+        android:id="@+id/small_font_size"
+        android:title="font-" />
 <!--    <item-->
 <!--        android:id="@+id/baud_rate"-->
 <!--        android:title="Baud rate" />-->

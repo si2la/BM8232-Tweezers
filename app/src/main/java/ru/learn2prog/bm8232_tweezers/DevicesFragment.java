@@ -1,8 +1,13 @@
 package ru.learn2prog.bm8232_tweezers;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.os.Bundle;
@@ -25,6 +30,7 @@ import com.hoho.android.usbserial.driver.UsbSerialProber;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 public class DevicesFragment extends ListFragment {
 
@@ -111,10 +117,68 @@ public class DevicesFragment extends ListFragment {
 //            });
 //            builder.create().show();
 //            return true;
-//        } else {
-//            return super.onOptionsItemSelected(item);
-//        }
-        return super.onOptionsItemSelected(item);
+        else if (id == R.id.inc_font_size) {
+            final float start_value = 0.6f; // start font size
+            final float step = 0.1f; // step font size
+            int size_coef; // font coefficient
+            // font_size = (0,6 + 0,1 * size_coef), default = 0,6 + 0,1 * 4 = 1
+
+            Resources res = getResources();
+            // get font scale
+            SharedPreferences settings = requireActivity().getSharedPreferences("BM8232AppSett", MODE_PRIVATE);
+            try {
+                size_coef = settings.getInt("size_coef", 4);
+            }
+            catch (Exception e) {
+                size_coef = 4;
+            }
+
+            size_coef++;
+            if (size_coef > 8) size_coef = 8;
+
+            float new_font_value = start_value + size_coef * step;
+            Configuration configuration = new Configuration(res.getConfiguration());
+            configuration.fontScale = new_font_value;
+            res.updateConfiguration(configuration, res.getDisplayMetrics());
+
+            // save configuration
+            SharedPreferences.Editor value_add = settings.edit();
+            value_add.putInt("size_coef", size_coef);
+            value_add.apply();
+
+            return true;
+        } else if (id == R.id.small_font_size) {
+            final float start_value = 0.6f;
+            final float step = 0.1f;
+            int size_coef;
+
+            Resources res = getResources();
+            // get font scale
+            SharedPreferences settings = requireActivity().getSharedPreferences("BM8232AppSett", MODE_PRIVATE);
+            try {
+                size_coef = settings.getInt("size_coef", 4);
+            }
+            catch (Exception e) {
+                size_coef = 4;
+            }
+
+            size_coef--;
+            if (size_coef < 0) size_coef = 0;
+
+            float new_font_value = start_value + size_coef * step;
+            Configuration configuration = new Configuration(res.getConfiguration());
+            configuration.fontScale = new_font_value;
+            res.updateConfiguration(configuration, res.getDisplayMetrics());
+
+            // save configuration
+            SharedPreferences.Editor value_add = settings.edit();
+            value_add.putInt("size_coef", size_coef);
+            value_add.apply();
+
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
+        }
     }
 
     void refresh() {
