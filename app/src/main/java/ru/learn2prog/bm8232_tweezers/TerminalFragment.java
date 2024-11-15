@@ -828,24 +828,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 status("send BREAK failed: " + e.getMessage());
             }
             return true;
-        } else if (id == R.id.inc_size ) {
-            Resources res = getResources();
-            float  fontScale = 1.2f;
-            Configuration configuration = new Configuration(res.getConfiguration());
-            configuration.fontScale = fontScale;
-            res.updateConfiguration(configuration, res.getDisplayMetrics());
-
-            return true;
-        } else if (id == R.id.small_size ) {
-            Resources res = getResources();
-            float  fontScale = 0.8f;
-            Configuration configuration = new Configuration(res.getConfiguration());
-            configuration.fontScale = fontScale;
-            res.updateConfiguration(configuration, res.getDisplayMetrics());
-
-            return true;
-        }
-        else{
+        } else{
             return super.onOptionsItemSelected(item);
         }
     }

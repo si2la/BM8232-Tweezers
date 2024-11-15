@@ -554,28 +554,28 @@
 
                           <TextView
                               android:id="@+id/TextViewLine02"
-                              android:text="@string/rlc_table_string_line"
+                              android:text="@string/rlc_table_string_b_line"
                               android:textStyle="bold"
                               android:typeface="monospace">
                           </TextView>
 
                           <TextView
                               android:id="@+id/TextViewLine03"
-                              android:text="@string/rlc_table_string_line"
+                              android:text="@string/rlc_table_string_b_line"
                               android:textStyle="bold"
                               android:typeface="monospace">
                           </TextView>
 
                           <TextView
                               android:id="@+id/TextViewLine04"
-                              android:text="@string/rlc_table_string_line"
+                              android:text="@string/rlc_table_string_b_line"
                               android:textStyle="bold"
                               android:typeface="monospace">
                           </TextView>
 
                           <TextView
                               android:id="@+id/TextViewLine05"
-                              android:text="@string/rlc_table_string_line"
+                              android:text="@string/rlc_table_string_b_line"
                               android:textStyle="bold"
                               android:typeface="monospace">
                           </TextView>
