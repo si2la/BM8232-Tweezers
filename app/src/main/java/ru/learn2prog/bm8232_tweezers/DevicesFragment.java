@@ -65,8 +65,11 @@ public class DevicesFragment extends ListFragment {
                 TextView text2 = view.findViewById(R.id.text2);
                 if(item.driver == null)
                     text1.setText("<no driver>");
-                else if(item.driver.getPorts().size() == 1)
-                    text1.setText(item.driver.getClass().getSimpleName().replace("SerialDriver",""));
+                else if(item.driver.getPorts().size() == 1) {
+                    String p_name = item.driver.getClass().getSimpleName().replace("SerialDriver","");
+                    if (p_name.equals("Ch34x")) text1.setText("(BM8232)");
+                    else text1.setText(p_name);
+                }
                 else
                     text1.setText(item.driver.getClass().getSimpleName().replace("SerialDriver","")+", Port "+item.port);
                 text2.setText(String.format(Locale.US, "Vendor %04X, Product %04X", item.device.getVendorId(), item.device.getProductId()));

@@ -715,7 +715,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         } else if (id == R.id.rlc_m) {
             if (bm8232_mode != BM8232_MODE.RLC_METER) {
                 bm8232_mode = BM8232_MODE.RLC_METER;
-                Toast.makeText(getActivity(), "RLC fix mode started", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Fix mode started", Toast.LENGTH_SHORT).show();
 
                 //cb_rlc_auto.setEnabled(true);
 //                cb_rlc_95.setEnabled(true);
@@ -763,7 +763,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
         } else if (id == R.id.all_rlc_m) {
             if (bm8232_mode != BM8232_MODE.ALL_RLC) {
                 bm8232_mode = BM8232_MODE.ALL_RLC;
-                Toast.makeText(getActivity(), "RLC all freq mode started", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "All freq mode started", Toast.LENGTH_SHORT).show();
 
                 send("rlc\r");
                 send("fall\r");

@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.WindowManager;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         Configuration configuration = new Configuration(res.getConfiguration());
         configuration.fontScale = font_value;
         res.updateConfiguration(configuration, res.getDisplayMetrics());
+
+        // don't screen off
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
     }
 
