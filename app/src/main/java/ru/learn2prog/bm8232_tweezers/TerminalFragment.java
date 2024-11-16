@@ -1257,8 +1257,11 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     @NonNull
     static String replaceOhm(String str) {
         String tmp;
-        // delete last odd symbol and add "Ω"
-        tmp = str.substring(0, str.length() - 1) + "Ω";
+        if (str.substring(str.length() - 1).equals("-")) tmp = str;
+        else {
+            // delete last odd symbol and add "Ω"
+            tmp = str.substring(0, str.length() - 1) + "Ω";
+        }
         return tmp;
     }
 
