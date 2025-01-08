@@ -717,13 +717,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
                 bm8232_mode = BM8232_MODE.RLC_METER;
                 Toast.makeText(getActivity(), "Fix mode started", Toast.LENGTH_SHORT).show();
 
-                //cb_rlc_auto.setEnabled(true);
-//                cb_rlc_95.setEnabled(true);
-//                cb_rlc_1k.setEnabled(true);
-//                cb_rlc_10k.setEnabled(true);
-//                cb_rlc_95k.setEnabled(true);
-//                cb_rlc_160k.setEnabled(true);
-
                 send("rlc\r");
                 // on start - send 95Hz mode"
                 //TODO - delete
